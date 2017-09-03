@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 
 // max-heapify O(lg n) maintains the max heap property
 // build max heap O(n) produces a max heap from an unordered input array
@@ -9,16 +10,20 @@ int Alength = 100;
 int elements = 0;
 int size(){return elements;}
 int length(){return Alength;}
-
+void swap(int* A,int i,int j){
+    int temp = A[i];
+    A[i] = A[j];
+    A[j] = temp;
+}
 // returns index
 // needs error checking
-int parent(int* A,int i){return A[i/2];}
-int left(int* A,int i){return A[2*i];}
-int right(int* A,int i){return A[2*i+1];}
+int parent(int i){return i/2;}
+int left(int i){return (i << 1);}
+int right(int i){return ((i << 1) | 1);};
 
 void max_heapify(int* A,int i){
-    int l = left(A,i);
-    int r = right(A,i);
+    int l = left(i);
+    int r = right(i);
     int largest = 0;
     if (l <= size() && A[l] > A[i]){
         largest = l;
@@ -31,9 +36,7 @@ void max_heapify(int* A,int i){
         largest = r;
     }
     if (largest != i){
-        int tmp = A[largest];
-        A[largest] = A[i];
-        A[i] = tmp;
+        swap(A,largest,i);
         max_heapify(A,largest);
     }
 }
@@ -47,29 +50,43 @@ void build_max_heap(int* A){
 
 void heap_sort(int* A){
     build_max_heap(A);
-    for (int i = length(); i <= 2;i--){
-        int tmp = A[i];
-        A[i] = A[1];
-        A[1] = tmp;
+    for (int i = length(); i >= 2;i--){
+        swap(A,1,i);
         elements--;
         max_heapify(A,1);
     }
 }
+void print(int *A){
+    printf("A: ");
+    for (int i = 1; i <= length(); i++){
+        printf("%i  ",A[i]);
+    }
+    printf("\n");
+}
 int main()
 {
     Alength = 10;
-    int A [Alength];
+    elements = 10;
+   // int A [Alength];
+   int A[] = {-1,4,1,3,2,16,9,10,14,8,7};
 
-    for (int i = 1; i <= 5;i++){
+/*    for (int i = 1; i <= 5;i++){
         A[i] = i*2;
         elements++;
-    }
-    printf("l: %i r: %i \n",left(A,2),right(A,2));
+      }*/
+//      printf("size(): %i\n",size());
+    //printf("l: %i r: %i \n",left(A,2),right(A,2));
 //    max_heapify(A,1);
 //    build_max_heap(A);
-    for (int i = 1;i<=5;i++){
-    printf("%i ",A[i]);
-    }
-    printf("\n");
+    heap_sort(A);
+    print(A);
+
+/*  test case 
+        for (int i = 1;i<=size();i++){
+        printf("index: %i\n",i);
+        printf("parrent: %i\n",parent(i));
+        printf("left: %i\n",left(i));
+        printf("right: %i\n",right(i));
+    }*/
     return 0;
 }
