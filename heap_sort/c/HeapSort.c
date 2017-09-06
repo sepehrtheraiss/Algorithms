@@ -1,58 +1,67 @@
-#include "./HeapSort.h"
-
+#include "HeapSort.h"
+#include "List.h"
 // strcuts ---------------------------------------------------------------------
 
 // private 
 typedef struct HeapSortObj {
-	List list = newList();
+	int* A;
 	int size;
 	int length;
 } HeapSortObj;
 // constructors-Destructors ----------------------------------------------------
 
 // returns reference to new empty max heap object 
-Heap newHeap(void){
-	Heap h    = malloc(sizeof(HeapSortObj));
-	h->size   = 0;
-	h->length = 0;
+Heap newHeap(List list){
+	Heap h  = malloc(sizeof(HeapSortObj));
+	h->A = malloc(sizeof(int)*length(list)); // A[0] will not be used
+	h->length = h->size = length(list);
+
+        for(int i = 1; i <= h->length; i++){
+            A[i] = list.pop();
+        }
 	return h;
 }
 
 // pre: *pH != NULL , pH != NULL
 void freeHeap(Heap* pH){
 	if(pH != NULL && *pH != NULL){
-		freeHeap(*pH);
+		clearHeap(*pH);
 		free(*pH);
 		*pH = NULL;
 	}
 }
 
-// Access functions -------------------------------------------------------------
 
+// Helper functions -------------------------------------------------------------
 // returns index
 int parent(int i){return i/2;}
 int left(int i){return (i << 1);} // i *2 
 int right(int i){return ((i << 1) | 1);}; // because I can and its faster
-
+void swapHeap(Heap h,int i,int j){
+   int temp =  h->A[i];
+   h->A[i] = h->A[j];
+   h->A[j] = temp;
+}
+// Access functions -------------------------------------------------------------
 
 // Manipulation procedures --------------------------------------------------------
 
 void max_heapify(Heap h,int i){
-	int l = left(i);
+    int l = left(i);
     int r = right(i);
     int largest = 0;
-    if (l <= h->size && A[l] > A[i]){
+    if (l <= h->size && h->A[l] > h->A[i] ){
         largest = l;
     }
     else{
         largest = i;
     }
 
-    if (r <= h->size && atIndex(h->list,r) > atIndex(h->list,largest){
+    if (r <= h->size && h->A[r] > h->A[largest] ){
         largest = r;
     }
     if (largest != i){
-        swap(h,largest,i);
+        swapHeap(h,largest,i);
         max_heapify(h,largest);
     }
 }
@@ -64,7 +73,7 @@ void build_max_heap(Heap h){
 }
 }
 void heap_sort(Heap h){
-	 build_max_heap(h);
+    build_max_heap(h);
     for (int i = length(); i >= 2;i--){
         swap(h->list,1,i);
         h->size--;
@@ -86,7 +95,7 @@ Heap copyHeap(Heap h){
 		exit(EXIT_FAILURE);
 	}
 	Heap n = newHeap();
-	n->list = copyList(h->list);
+	#n->A = 
 	n->length = h->length;
 	n->size = h->size;
 	return n;

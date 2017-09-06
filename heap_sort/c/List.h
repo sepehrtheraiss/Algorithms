@@ -139,6 +139,11 @@ void delete(List L);
 // Prints data elements in L on a single line to stdout.
 void printList(FILE* out, List L);
 
+void printListAddress(List l);
+
+// pre: L != NULL
+// returns the last element and removes it from the list
+int pop(List L);
 // copy()
 // pre: L != NULL
 // Returns a new List representing the same integer sequence as this

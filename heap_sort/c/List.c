@@ -1,7 +1,6 @@
 // ---------------------------------------------------------------
 // Sepehr Raissian
 // Sraissia@ucsc.edu
-// CMPS101 pa4
 // List.c
 // ----------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -142,6 +141,15 @@ int back(List L)
         exit(EXIT_FAILURE);
     }
     return L->tail->data;
+}
+
+// pop()
+// Pre: L != NULL
+// returns the last element and removes it from list
+int pop(List L){
+    int e = back(L);
+    deleteBack(L);
+    return e;
 }
 
 // get()
@@ -545,7 +553,13 @@ void printList(FILE* out, List L)
         }
     }
 }
-
+void printListAddress(List l){
+    moveFront(l);
+    while(index(l)!=-1){
+        printf("%p\n", l->cursor);
+        moveNext(l);
+    }
+}
 // copy()
 // pre: L != NULL
 // Returns a new List representing the same integer sequence as this
@@ -564,3 +578,4 @@ List copyList(List L)
     }
     return n;
 }
+

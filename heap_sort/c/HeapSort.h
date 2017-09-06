@@ -1,6 +1,9 @@
 #ifndef _HEAP_SORT_H_INCLUDE_
 #define _HEAP_SORT_H_INCLUDE_
 
+#include<stdio.h>
+#include<stdlib.h>
+#include "List.h"
 // max-heapify O(lg n) maintains the max heap property
 // build max heap O(n) produces a max heap from an unordered input array
 // heaposort O(n lg n) sorts an array 
@@ -11,7 +14,7 @@ typedef struct HeapSortObj* Heap;
 // constructors-Destructors ----------------------------------------------------
 
 // returns reference to new empty max heap object 
-Heap newHeap(void);
+Heap newHeap(List list);
 
 // pre: *pH != NULL , pH != NULL
 void freeHeap(Heap* pH);
@@ -28,7 +31,7 @@ int right(int i);
 void max_heapify(Heap h,int i);
 void build_max_heap(Heap h);
 void heap_sort(Heap h);
-void clear(Heap h);
+void clearHeap(Heap h);
 void printHeap(FILE* out,Heap h);
 
 Heap copyHeap(Heap h);
