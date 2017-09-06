@@ -10,5 +10,7 @@ int main()
     append(l,1);
     Heap h = newHeap(l);
     freeList(&l);
+    build_max_heap(h);
+    printHeap(stdout,h);
     return 0;
 }

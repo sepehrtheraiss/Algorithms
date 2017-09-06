@@ -17,7 +17,7 @@ Heap newHeap(List list){
 	h->length = h->size = length(list);
 
         for(int i = 1; i <= h->length; i++){
-            A[i] = list.pop();
+            h->A[i] = pop(list);
         }
 	return h;
 }
@@ -66,37 +66,40 @@ void max_heapify(Heap h,int i){
     }
 }
 void build_max_heap(Heap h){
-	elements = length();
-    for (int i = length()/2;i >=1; i--){
+	h->size = h->length;
+    for (int i = h->length/2;i >=1; i--){
         max_heapify(h,i);
     }
 }
-}
 void heap_sort(Heap h){
     build_max_heap(h);
-    for (int i = length(); i >= 2;i--){
-        swap(h->list,1,i);
+    for (int i = h->length; i >= 2;i--){
+        swapHeap(h,1,i);
         h->size--;
         max_heapify(h,1);
     }
 }
 void clearHeap(Heap h){
-	clear(h->list);
+	free(h->A);
 	h->length = 0;
 	h->size = 0;
 }
 void printHeap(FILE* out,Heap h){
-	printList(out,h->list);
+    fprintf(out,"A: ");
+    for (int i = 1; i<= h->length; i++){
+        fprintf(out,"%i ",h->A[i]);
+    }
+    fprintf(out,"\n");
 }
-
+/*
 Heap copyHeap(Heap h){
 	if (h == NULL){
 		printf("Heap Error: calling copyHeap() on NULL Heap reference\n");
 		exit(EXIT_FAILURE);
 	}
 	Heap n = newHeap();
-	#n->A = 
+	 n->A = 
 	n->length = h->length;
 	n->size = h->size;
 	return n;
-}
+}*/
