@@ -13,10 +13,9 @@ typedef struct HeapSortObj {
 // returns reference to new empty max heap object 
 Heap newHeap(List list){
 	Heap h  = malloc(sizeof(HeapSortObj));
-	h->A = malloc(sizeof(int)*length(list)); // A[0] will not be used
+	h->A = malloc((sizeof(int)*length(list)) +1); // A[0] will not be used
 	h->length = h->size = length(list);
-
-        for(int i = 1; i <= h->length; i++){
+        for(int i = 1; i < h->length; i++){
             h->A[i] = pop(list);
         }
 	return h;
@@ -25,7 +24,10 @@ Heap newHeap(List list){
 // pre: *pH != NULL , pH != NULL
 void freeHeap(Heap* pH){
 	if(pH != NULL && *pH != NULL){
-		clearHeap(*pH);
+	//	clearHeap(*pH);
+                free((*pH)->A);
+	        (*pH)->length = 0;
+	        (*pH)->size = 0;
 		free(*pH);
 		*pH = NULL;
 	}

@@ -5,7 +5,7 @@
 #  make HeapTest            makes HeapTest
 #  make clean               removes binaries
 #  make checkFind           tests heap for memory leaks 
-#  make checkClient         tests HeapClient for memory leaks
+#  make checkTest           tests HeapTest for memory leaks
 #------------------------------------------------------------------------------
 
 BASE_SOURCES   = HeapSort.c List.c
@@ -36,5 +36,5 @@ $(BASE_OBJECTS) : $(BASE_SOURCES) $(HEADERS)
 clean :
 	$(REMOVE)  HeapClient HeapTest HeapTest.o HeapClient.o $(BASE_OBJECTS)
 
-checkClient : HeapClient
-	$(MEMCHECK) HeapClient
+checkTest : HeapTest
+	$(MEMCHECK) ./HeapTest

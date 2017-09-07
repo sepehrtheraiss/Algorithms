@@ -1,4 +1,3 @@
-
 #include<stdio.h>
 #include<stdlib.h>
 #include "HeapSort.h"
@@ -10,7 +9,8 @@ int main()
     append(l,1);
     Heap h = newHeap(l);
     freeList(&l);
-    build_max_heap(h);
-    printHeap(stdout,h);
+//    build_max_heap(h);
+ //   printHeap(stdout,h);
+    freeHeap(&h);
     return 0;
 }
