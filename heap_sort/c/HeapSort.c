@@ -13,9 +13,9 @@ typedef struct HeapSortObj {
 // returns reference to new empty max heap object 
 Heap newHeap(List list){
 	Heap h  = malloc(sizeof(HeapSortObj));
-	h->A = malloc((sizeof(int)*length(list)) +1); // A[0] will not be used
+	h->A = malloc( sizeof(int)* (length(list)+1) ) ; // A[0] will not be used
 	h->length = h->size = length(list);
-        for(int i = 1; i < h->length; i++){
+        for(int i = 1; i <= h->length; i++){
             h->A[i] = pop(list);
         }
 	return h;
@@ -93,15 +93,55 @@ void printHeap(FILE* out,Heap h){
     }
     fprintf(out,"\n");
 }
-/*
+
+int Heap_Maximum(Heap h){
+    if(h != NULL){
+        return h->A[1];
+    }
+    else{
+        fprintf(stderr,"Heap == NULL\n");
+        exit(1);
+    }
+}
+int Heap_Extract_Max(Heap h){
+    if(h->size < 1){
+        fprintf(stderr,"heap underflow\n");
+        exit(1);
+    }
+    int max = h->A[1];
+    h->A[1] = h->A[h->size];
+    h->size--;
+    max_heapify(h,1);
+    return max;
+}
+
+void Heap_Increase_Key(Heap h,int i,int key){
+    if(key < h->A[i]){
+        fprintf(stderr,"new key is smaller than current key\n");
+    }
+    h->A[i] = key;
+    while (i > 1 && h->A[parent(i)] < h->A[i]){
+        swapHeap(h,i,parent(i));
+        i = parent(i);
+    }
+}
+
+void Max_Heap_Insert(Heap h,int key){
+    h->size++;
+    h->A[h->size] = -9999;
+    //Heap_Increase_key(h,h->size,key);
+}
+
 Heap copyHeap(Heap h){
-	if (h == NULL){
-		printf("Heap Error: calling copyHeap() on NULL Heap reference\n");
-		exit(EXIT_FAILURE);
-	}
-	Heap n = newHeap();
-	 n->A = 
-	n->length = h->length;
-	n->size = h->size;
-	return n;
-}*/
+    if (h == NULL){
+	    printf("Heap Error: calling copyHeap() on NULL Heap reference\n");
+	    exit(EXIT_FAILURE);
+    }
+    Heap copy = malloc(sizeof(HeapSortObj));
+    copy->A = malloc(sizeof(int)* (h->length+1) ); 
+    copy->length = copy->size = h->length;
+    for(int i = 1; i <= copy->length; i++){
+        copy->A[i] = h->A[i];
+    }
+    return copy;
+}

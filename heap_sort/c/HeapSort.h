@@ -34,5 +34,11 @@ void heap_sort(Heap h);
 void clearHeap(Heap h);
 void printHeap(FILE* out,Heap h);
 
+// priority queue
+int Heap_Maximum(Heap h);
+int Heap_Extract_Max(Heap h);
+void Heap_Increase_key(Heap h,int i,int key);
+void Max_Heap_Insert(Heap h,int key);
 Heap copyHeap(Heap h);
+
 #endif

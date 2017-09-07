@@ -9,8 +9,11 @@ int main()
     append(l,1);
     Heap h = newHeap(l);
     freeList(&l);
-//    build_max_heap(h);
- //   printHeap(stdout,h);
+    build_max_heap(h);
+    printHeap(stdout,h);
+    Heap copy = copyHeap(h);
+    printHeap(stdout,copy);
     freeHeap(&h);
+    freeHeap(&copy);
     return 0;
 }
