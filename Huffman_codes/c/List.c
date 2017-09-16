@@ -552,7 +552,27 @@ void printList(FILE* out, List L)
             fprintf(out," ");
         }
     }
+    fprintf(out,"\n");
 }
+void printListChar(FILE* out, List L)
+{
+    if( L==NULL ){
+        printf("List Error: calling delete() on NULL List reference\n");
+        exit(EXIT_FAILURE);
+    }
+    moveFront(L);
+    while(index(L)!=-1)
+    {
+        fprintf(out,"%c",(char)get(L));
+        moveNext(L);
+        if(index(L)!=-1)
+        {
+            fprintf(out," ");
+        }
+    }
+    fprintf(out,"\n");
+}
+
 void printListAddress(List l){
     moveFront(l);
     while(index(l)!=-1){

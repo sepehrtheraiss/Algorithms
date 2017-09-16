@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#  Makefile for Heap Sort
+#  Makefile for Huffman codes
 #
 #  make HeapClient          makes HeapClient
 #  make HuffmanTest         makes HuffmanTest

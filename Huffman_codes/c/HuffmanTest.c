@@ -47,9 +47,9 @@ int main()
     char* C = "are mamaman jan bokonam onjaro ay khoda"; 
     int n = strlen(C);
     mapFreq(C,n,freqList,uniqueList);
+    printListChar(stdout,uniqueList);
     printList(stdout,freqList);
-    printList(stdout,uniqueList);
-    freeList(&freqList);
     freeList(&uniqueList);
+    freeList(&freqList);
     return 0;
 }

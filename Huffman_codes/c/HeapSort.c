@@ -4,8 +4,6 @@
 
 // private 
 typedef struct HeapSortObj {
-//	typedef struct node node;
-  //      node* A;
         int* A;
 	int size;
 	int length;
