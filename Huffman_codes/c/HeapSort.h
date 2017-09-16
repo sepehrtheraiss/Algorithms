@@ -10,6 +10,7 @@
 // max-heap-insert, heap-extract-max, heap-increase-key and heap-maximum O(lg n) implementation for priority queue
 
 typedef struct HeapSortObj* Heap;
+typedef struct node node;
 
 // constructors-Destructors ----------------------------------------------------
 
@@ -40,13 +41,13 @@ void clearHeap(Heap h);
 void printHeap(FILE* out,Heap h);
 
 // max priority queue
-int Heap_Maximum(Heap h);
-int Heap_Extract_Max(Heap h);
+node* Heap_Maximum(Heap h);
+node* Heap_Extract_Max(Heap h);
 void Heap_Increase_Key(Heap h,int i,int key);
 void Max_Heap_Insert(Heap h,int key);
 // min priority queue
-int Heap_Minimum(Heap h);
-int Heap_Extract_Min(Heap h);
+node* Heap_Minimum(Heap h);
+node* Heap_Extract_Min(Heap h);
 void Heap_Decrease_Key(Heap h,int i,int key);
 void Min_Heap_Insert(Heap h,int key);
 

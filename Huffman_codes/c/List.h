@@ -44,17 +44,17 @@ int index(List L);
 // front()
 // Pre: L != NULL, length()>0
 // Returns front element.
-int front(List L);
+void* front(List L);
 
 // back()
 // Pre: L != NULL, length()>0
 // Returns back element.
-int back(List L);
+void* back(List L);
 
 // get()
 // Pre: L != NULL, length()>0, index()>=0
 // Returns cursor element.
-int get(List L);
+void* get(List L);
 
 // equals()
 // pre: L != NULL
@@ -99,23 +99,23 @@ void moveNext(List L);
 // pre: L != NULL
 // Insert new element into this List. If List is non-empty,
 // insertion takes place before front element.
-void prepend(List L,int data);
+void prepend(List L,void* data);
 
 // append()
 // pre: L != NULL
 // Insert new element into this List. If List is non-empty,
 // insertion takes place after back element.
-void append(List L,int data);
+void append(List L,void* data);
 
 // insertBefore()
 // Pre: L != NULL,length()>0, index()>=0
 // Insert new element before cursor.
-void insertBefore(List L,int data);
+void insertBefore(List L,void* data);
 
 // insertAfter()
 // Pre: L != NULL,length()>0, index()>=0
 // Inserts new element after cursor.
-void insertAfter(List L,int data);
+void insertAfter(List L,void* data);
 
 // deleteFront()
 // Pre: L != NULL,length()>0
@@ -143,7 +143,7 @@ void printListAddress(List l);
 
 // pre: L != NULL
 // returns the last element and removes it from the list
-int pop(List L);
+void* pop(List L);
 // copy()
 // pre: L != NULL
 // Returns a new List representing the same integer sequence as this

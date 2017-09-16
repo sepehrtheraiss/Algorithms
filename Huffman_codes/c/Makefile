@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------
 #  Makefile for Huffman codes
 #
-#  make HeapClient          makes HeapClient
+#  make ListTest            makes ListTest
 #  make HuffmanTest         makes HuffmanTest
 #  make clean               removes binaries
 #  make checkFind           tests heap for memory leaks 
@@ -17,15 +17,15 @@ REMOVE         = rm -f
 MEMCHECK       = valgrind --leak-check=full
 
 
-HeapClient : HeapClient.o $(BASE_OBJECTS)
-	$(LINK) HeapClient HeapClient.o $(BASE_OBJECTS)
+ListTest : ListTest.o List.o
+	$(LINK) ListTest ListTest.o List.o
 
 HuffmanTest : HuffmanTest.o $(BASE_OBJECTS)
 	$(LINK) HuffmanTest HuffmanTest.o $(BASE_OBJECTS)
 
 
-HeapClient.o : HeapClient.c $(HEADERS)
-	$(COMPILE) HeapClient.c
+ListTest.o : ListTest.c List.h
+	$(COMPILE) ListTest.c List.c
 
 HuffmanTest.o : HuffmanTest.c $(HEADERS)
 	$(COMPILE) HuffmanTest.c
@@ -34,7 +34,7 @@ $(BASE_OBJECTS) : $(BASE_SOURCES) $(HEADERS)
 	$(COMPILE) $(BASE_SOURCES)
 
 clean :
-	$(REMOVE)  HeapClient HuffmanTest HeapTest.o HeapClient.o $(BASE_OBJECTS)
+	$(REMOVE)  test test.o HuffmanTest HeapTest.o HeapClient.o $(BASE_OBJECTS)
 
 checkTest : HuffmanTest
 	$(MEMCHECK) ./HuffmanTest

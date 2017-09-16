@@ -12,7 +12,7 @@
 
 // private NodeObj type
 typedef struct NodeObj{
-    int data;
+    void* data;
     struct NodeObj* next;
     struct NodeObj* prev;
 } NodeObj;
@@ -34,7 +34,7 @@ typedef struct ListObj{
 // newNode()
 // Returns reference to new Node object. Initializes next and data fields.
 // Private.
-Node newNode(int data){
+Node newNode(void* data){
     Node N = malloc(sizeof(NodeObj));
     N->data = data;
     N->next = N->prev = NULL;
@@ -114,7 +114,7 @@ int index(List L)
 // front()
 // Pre: L != NULL, length()>0
 // Returns front element.
-int front(List L)
+void* front(List L)
 {
     if( L==NULL ){
         printf("List Error: calling front() on NULL List reference\n");
@@ -130,7 +130,7 @@ int front(List L)
 // back()
 // Pre: L != NULL, length()>0
 // Returns back element.
-int back(List L)
+void* back(List L)
 {
     if( L==NULL ){
         printf("List Error: calling back() on NULL List reference\n");
@@ -146,8 +146,8 @@ int back(List L)
 // pop()
 // Pre: L != NULL
 // returns the last element and removes it from list
-int pop(List L){
-    int e = back(L);
+void* pop(List L){
+    void* e = back(L);
     deleteBack(L);
     return e;
 }
@@ -155,7 +155,7 @@ int pop(List L){
 // get()
 // Pre: L != NULL, length()>0, index()>=0
 // Returns cursor element.
-int get(List L)
+void* get(List L)
 {
     if( L==NULL ){
         printf("List Error: calling get() on NULL List reference\n");
@@ -313,7 +313,7 @@ void moveNext(List L)
 // pre: L != NULL
 // Insert new element into this List. If List is non-empty,
 // insertion takes place before front element.
-void prepend(List L,int data)
+void prepend(List L,void* data)
 {
     if( L==NULL ){
         printf("List Error: calling prepend() on NULL List reference\n");
@@ -336,7 +336,7 @@ void prepend(List L,int data)
 // pre: L != NULL
 // Insert new element into this List. If List is non-empty,
 // insertion takes place after back element.
-void append(List L,int data)
+void append(List L,void* data)
 {
     if( L==NULL ){
         printf("List Error: calling append() on NULL List reference\n");
@@ -358,7 +358,7 @@ void append(List L,int data)
 // insertBefore()
 // Pre: L != NULL,length()>0, index()>=0
 // Insert new element before cursor.
-void insertBefore(List L,int data)
+void insertBefore(List L,void* data)
 {
     if( L==NULL ){
         printf("List Error: calling insertBefore() on NULL List reference\n");
@@ -395,7 +395,7 @@ void insertBefore(List L,int data)
 // insertAfter()
 // Pre: L != NULL,length()>0, index()>=0
 // Inserts new element after cursor.
-void insertAfter(List L,int data)
+void insertAfter(List L,void* data)
 {
 
     if( L==NULL ){
@@ -545,7 +545,7 @@ void printList(FILE* out, List L)
     moveFront(L);
     while(index(L)!=-1)
     {
-        fprintf(out,"%i",get(L));
+        fprintf(out,"%i",(int)get(L));
         moveNext(L);
         if(index(L)!=-1)
         {
