@@ -28,10 +28,10 @@ HuffmanTest : HuffmanTest.o $(BASE_OBJECTS)
 	$(LINK) HuffmanTest HuffmanTest.o $(BASE_OBJECTS)
 
 
-ListTest.o : ListTest.c List.h node.h
+ListTest.o : ListTest.c List.h 
 	$(COMPILE) ListTest.c List.c
 
-HeapTest.o : HeapTest.c HeapSort.h List.h node.h
+HeapTest.o : HeapTest.c HeapSort.h List.h 
 	$(COMPILE) HeapTest.c HeapSort.c List.c
 
 HuffmanTest.o : HuffmanTest.c $(HEADERS)
