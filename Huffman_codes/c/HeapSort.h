@@ -4,12 +4,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "List.h"
-#include "node.h"
 // max-heapify O(lg n) maintains the max heap property
 // build max heap O(n) produces a max heap from an unordered input array
 // heaposort O(n lg n) sorts an array 
 // max-heap-insert, heap-extract-max, heap-increase-key and heap-maximum O(lg n) implementation for priority queue
-
+typedef struct node {
+    int key;
+    void* data;
+}node;
 //typedef struct nodeObj node;
 typedef struct HeapSortObj* Heap;
 
@@ -28,6 +30,8 @@ int parent(int i);
 int left(int i);
 int right(int i);
 void swapHeap(Heap h,int i,int j);
+int HeapLength(Heap h);
+int HeapSize(Heap h);
 void clearHeap(Heap h);
 void printHeap(FILE* out,Heap h,char type);
 void printHeapMemAddress(Heap h);
@@ -53,3 +57,19 @@ void Heap_Decrease_Key(Heap h,int i,int key);
 void Min_Heap_Insert(Heap h,int key,void* data);
 
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

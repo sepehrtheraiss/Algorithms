@@ -2,13 +2,6 @@
 #include <limits.h>
 // strcuts ---------------------------------------------------------------------
 
-// private
-/*typedef struct nodeObj{
-    int key;
-    void* data;
-}nodeObj;
-
-*/
 typedef struct HeapSortObj {
         node** A;
 	int size;
@@ -50,15 +43,21 @@ void swapHeap(Heap h,int i,int j){
    h->A[j] = temp;
 }
 void printHeapMemAddress(Heap h){
-    printf("A memory address: ");
+    printf("A memory address: \n");
     for(int i = 1; i <= h->size; i++){
-        printf("%p ",&h->A[i]);
+        printf("%p \n",&h->A[i]);
     }
-    printf("\n");
+    //printf("\n");
 }
-
+int HeapLength(Heap h){
+    return h->length;
+}
+int HeapSize(Heap h){
+    return h->size;
+}
 void clearHeap(Heap h){
 	free(h->A);
+        h->A = NULL;
 	h->length = 0;
 	h->size = 0;
 }
@@ -133,14 +132,15 @@ void heap_sort(Heap h){
         h->size--;
         max_heapify(h,1);
     }
+    h->size = h->length;
 }
 // Max priority queue
 node* Heap_Maximum(Heap h){
-    if(h != NULL){
+    if(h != NULL && h->size != 0){
         return h->A[1];
     }
     else{
-        fprintf(stderr,"Heap == NULL\n");
+        fprintf(stderr,"Heap == NULL || size == 0\n");
         exit(EXIT_FAILURE);
     }
 }
@@ -170,10 +170,41 @@ void Heap_Increase_Key(Heap h,int i,int key){
 
 void Max_Heap_Insert(Heap h,int key,void* data){
     h->size++;
-    if(h->size >= h->length){
-        h->A = realloc(h->A,sizeof(node) * (h->size * 2) );
-        h->length = h->size * 2;
+    /*if(h->size >= h->length){
+         Heap copy = copyHeap(h);
+         freeHeap(&h);
+         h = malloc(sizeof(HeapSortObj));
+         h->A = malloc(sizeof(node) * (copy->size*2) );
+         h->length = copy->size*2;
+         h->size = t;
+         for(int i =1;i<= copy->size;i++){
+            h->A[i] = copy->A[i];
+        }
+        freeHeap(&copy);
+    }*/
+    if(h->A == NULL){
+        if(h->length == 0){
+            h->length = 10;
+        }
+        h->A = malloc(sizeof(node)*h->length);
+        for(int i=1; i < h->length;i++){
+            node* n = malloc(sizeof(node));
+            n->key = 0;
+            n->data = NULL;
+            h->A[i] = n;
+        }
     }
+    if(h->size >= h->length){
+        h->A = realloc(h->A,sizeof(node) * (h->length * 2) );
+        h->length = h->size * 2;
+        for(int i = h->size; i < h->length;i++){
+            node* n = malloc(sizeof(node));
+            n->key = 0;
+            n->data = NULL;
+            h->A[i] = n;
+        }
+    }
+
     h->A[h->size]->key = INT_MIN;
     h->A[h->size]->data = data;
     Heap_Increase_Key(h,h->size,key);
@@ -207,11 +238,11 @@ void build_min_heap(Heap h){
 // Min priority queue ----------------------------------------------------
 
 node* Heap_Minimum(Heap h){
-    if(h != NULL){
+    if(h != NULL && h->size != 0){
         return h->A[1];
     }
     else{
-        fprintf(stderr,"Heap == NULL\n");
+        fprintf(stderr,"Heap == NULL || size == 0 \n");
         exit(EXIT_FAILURE);
     }
 }
@@ -241,11 +272,50 @@ void Heap_Decrease_Key(Heap h,int i,int key){
 
 void Min_Heap_Insert(Heap h,int key,void* data){
     h->size++;
+    /*int t = h->size++;
     if(h->size >= h->length){
-        h->A = realloc(h->A,sizeof(node) * (h->size * 2) );
+         Heap copy = copyHeap(h);
+         freeHeap(&h);
+         h = malloc(sizeof(HeapSortObj));
+         h->A = malloc(sizeof(node) * (copy->length*2) );
+         h->length = copy->length*2;
+         h->size = t;
+         for(int i =1;i<= copy->size;i++){
+            h->A[i] = copy->A[i];
+        }
+        freeHeap(&copy);*/
+    if(h->A == NULL){
+        if(h->length == 0){
+            h->length = 10;
+        }
+        h->A = malloc(sizeof(node)*h->length);
+        for(int i=1; i < h->length;i++){
+            node* n = malloc(sizeof(node));
+            n->key = 0;
+            n->data = NULL;
+            h->A[i] = n;
+        }
+    }
+    if(h->size >= h->length){
+        h->A = realloc(h->A,sizeof(node) * (h->length * 2) );
         h->length = h->size * 2;
+        for(int i = h->size; i < h->length;i++){
+            node* n = malloc(sizeof(node));
+            n->key = 0;
+            n->data = NULL;
+            h->A[i] = n;
+        }
     }
     h->A[h->size]->key = INT_MAX;
     h->A[h->size]->data = data;
     Heap_Decrease_Key(h,h->size,key);
 } 
+
+
+
+
+
+
+
+
+
