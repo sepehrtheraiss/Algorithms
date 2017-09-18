@@ -1,14 +1,16 @@
 #include "HeapSort.h"
-#include<limits.h>
+#include <limits.h>
 // strcuts ---------------------------------------------------------------------
 
 // private
-struct node{
+/*typedef struct nodeObj{
     int key;
     void* data;
-};
+}nodeObj;
+
+*/
 typedef struct HeapSortObj {
-        node* A;
+        node** A;
 	int size;
 	int length;
 } HeapSortObj;
@@ -20,7 +22,7 @@ Heap newHeap(List list){
 	h->A = malloc( sizeof(node)* (length(list)+1) ) ; // A[0] will not be used
 	h->length = h->size = length(list);
         for(int i = 1; i <= h->length; i++){
-            h->A[i] = pop(list);
+            h->A[i] = (node *)pop(list);
         }
 	return h;
 }
@@ -43,7 +45,7 @@ int parent(int i){return i/2;}
 int left(int i){return (i << 1);} // i *2 
 int right(int i){return ((i << 1) | 1);}; // because I can and its faster
 void swapHeap(Heap h,int i,int j){
-   int temp =  h->A[i];
+   node* temp =  h->A[i];
    h->A[i] = h->A[j];
    h->A[j] = temp;
 }
@@ -60,12 +62,25 @@ void clearHeap(Heap h){
 	h->length = 0;
 	h->size = 0;
 }
-void printHeap(FILE* out,Heap h){
-    fprintf(out,"A: ");
+void printHeap(FILE* out,Heap h,char type){
+    fprintf(out,"------Heap nodes------\n");
     for (int i = 1; i<= h->size; i++){
-        fprintf(out,"%i ",h->A[i]->data);
+        switch (type){
+            case 'i':
+                fprintf(out,"key:%i data:%i\n",h->A[i]->key,*(int *)h->A[i]->data);
+                break;
+            case 's':
+                fprintf(out,"key:%i data:%s\n",h->A[i]->key,(char *)h->A[i]->data);
+                break;
+            default:
+                fprintf(out,"key:%i data:%p\n",h->A[i]->key,h->A[i]->data);
+                break;
+        }
     }
-    fprintf(out,"\n");
+   /* for (int i = 1; i<= h->size; i++){
+        fprintf(out,"key:%i data:%s\n",h->A[i]->key,(char *)h->A[i]->data);
+    }*/
+    fprintf(out,"------Heap nodes------\n");
 }
 
 Heap copyHeap(Heap h){
@@ -134,7 +149,7 @@ node* Heap_Extract_Max(Heap h){
         fprintf(stderr,"heap underflow\n");
         exit(EXIT_FAILURE);
     }
-    int max = h->A[1]->key;
+    node* max = h->A[1];
     h->A[1] = h->A[h->size];
     h->size--;
     max_heapify(h,1);
@@ -153,13 +168,14 @@ void Heap_Increase_Key(Heap h,int i,int key){
     }
 }
 
-void Max_Heap_Insert(Heap h,int key){
+void Max_Heap_Insert(Heap h,int key,void* data){
     h->size++;
-    if(h->size == h->length){
+    if(h->size >= h->length){
         h->A = realloc(h->A,sizeof(node) * (h->size * 2) );
         h->length = h->size * 2;
     }
-    h->A[h->size] = INT_MIN;
+    h->A[h->size]->key = INT_MIN;
+    h->A[h->size]->data = data;
     Heap_Increase_Key(h,h->size,key);
 }   
 // Min Heap Sort ------------------------------------------------------
@@ -204,7 +220,7 @@ node* Heap_Extract_Min(Heap h){
         fprintf(stderr,"heap underflow\n");
         exit(EXIT_FAILURE);
     }
-    int min = h->A[1]->key;
+    node* min = h->A[1];
     h->A[1] = h->A[h->size];
     h->size--;
     min_heapify(h,1);
@@ -223,12 +239,13 @@ void Heap_Decrease_Key(Heap h,int i,int key){
     }
 }
 
-void Min_Heap_Insert(Heap h,int key){
+void Min_Heap_Insert(Heap h,int key,void* data){
     h->size++;
-    if(h->size == h->length){
+    if(h->size >= h->length){
         h->A = realloc(h->A,sizeof(node) * (h->size * 2) );
         h->length = h->size * 2;
     }
-    h->A[h->size] = INT_MAX;
+    h->A[h->size]->key = INT_MAX;
+    h->A[h->size]->data = data;
     Heap_Decrease_Key(h,h->size,key);
 } 

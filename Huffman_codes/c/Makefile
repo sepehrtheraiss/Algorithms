@@ -2,6 +2,7 @@
 #  Makefile for Huffman codes
 #
 #  make ListTest            makes ListTest
+#  make HeapTest            makes HeapTest
 #  make HuffmanTest         makes HuffmanTest
 #  make clean               removes binaries
 #  make checkFind           tests heap for memory leaks 
@@ -20,12 +21,18 @@ MEMCHECK       = valgrind --leak-check=full
 ListTest : ListTest.o List.o
 	$(LINK) ListTest ListTest.o List.o
 
+HeapTest : HeapTest.o HeapSort.o List.o
+	$(LINK) HeapTest HeapTest.o HeapSort.o List.o
+
 HuffmanTest : HuffmanTest.o $(BASE_OBJECTS)
 	$(LINK) HuffmanTest HuffmanTest.o $(BASE_OBJECTS)
 
 
-ListTest.o : ListTest.c List.h
+ListTest.o : ListTest.c List.h node.h
 	$(COMPILE) ListTest.c List.c
+
+HeapTest.o : HeapTest.c HeapSort.h List.h node.h
+	$(COMPILE) HeapTest.c HeapSort.c List.c
 
 HuffmanTest.o : HuffmanTest.c $(HEADERS)
 	$(COMPILE) HuffmanTest.c

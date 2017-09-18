@@ -59,6 +59,8 @@ int main()
     printHeap(stdout,h);
     Heap_Decrease_Key(h,2,1);
     printHeap(stdout,h);
+    Min_Heap_Insert(h,23);
+    printHeap(stdout,h);
     freeHeap(&h);
     return 0;
 }

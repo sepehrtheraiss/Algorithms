@@ -576,7 +576,7 @@ void printListChar(FILE* out, List L)
 void printListAddress(List l){
     moveFront(l);
     while(index(l)!=-1){
-        printf("%p\n", l->cursor);
+        printf("%p\n", l->cursor->data);
         moveNext(l);
     }
 }
