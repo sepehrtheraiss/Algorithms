@@ -36,12 +36,12 @@ void mapFreq(char* C,int strlen,List l){
     for(int i=0;i<strlen;i++){
         if(Ccopy[i] != '$'){
             HeapNode* n = malloc(sizeof(HeapNode));
-            n->key = freq(Ccopy[i],Ccopy,strlen);
             printf("c: %c freq: %i\n",Ccopy[i],n->key);
             n->data = malloc(sizeof(HuffNode));
             ((HuffNode *)n->data)->c     = Ccopy[i];
             ((HuffNode *)n->data)->left  = -1;
             ((HuffNode *)n->data)->right = -1;
+            n->key = freq(Ccopy[i],Ccopy,strlen);
             append(l,n);
         }
     }
