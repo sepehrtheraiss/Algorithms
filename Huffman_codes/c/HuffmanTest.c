@@ -52,7 +52,7 @@ int main()
         z->right = Heap_Extract_Min(h);
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
     }
-    printf("%i\n",Heap_Minimum(h)->key);
+    printHeap(stdout,h,'c');
     freeList(&l);
     freeHeap(&h);
     return 0;
