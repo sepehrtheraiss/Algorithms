@@ -50,10 +50,9 @@ int main()
         HuffNode* z  = malloc(sizeof(HuffNode));       
         z->left  = Heap_Extract_Min(h);
         z->right = Heap_Extract_Min(h);
-        //printf("%i %i \n",z->left->key,z->right->key);
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
     }
-
+    printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
     freeHeap(&h);
     return 0;
