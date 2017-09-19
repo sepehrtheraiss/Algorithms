@@ -49,7 +49,7 @@ int main()
     mapFreq(C,n,l);
     Heap h = newHeap(l);
     build_min_heap(h);
-    printHeap(stdout,h,'s');
+    printHeap(stdout,h,'c');
     // for(int i =0;i<n;i++){
     //     node* z = malloc(sizeof(node));       
     //     z->left = 
