@@ -46,7 +46,7 @@ int main()
     Heap h = newHeap(l);
     build_min_heap(h);
     printHeap(stdout,h,'c');
-    for(int i =1;i<n-1;i++){
+    for(int i =1;i>1;i++){
         HuffNode* z  = malloc(sizeof(HuffNode));       
         z->left  = Heap_Extract_Min(h);
         z->right = Heap_Extract_Min(h);
