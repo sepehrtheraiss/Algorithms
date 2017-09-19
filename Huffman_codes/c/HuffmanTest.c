@@ -46,11 +46,11 @@ int main()
     Heap h = newHeap(l);
     build_min_heap(h);
     printHeap(stdout,h,'c');
-    for(int i =0;i<n-1;i++){
+    for(int i =1;i<n-1;i++){
         HuffNode* z  = malloc(sizeof(HuffNode));       
         z->left  = Heap_Extract_Min(h);
         z->right = Heap_Extract_Min(h);
-        printf("%i %i \n",z->left->key,z->right->key);
+        //printf("%i %i \n",z->left->key,z->right->key);
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
     }
 
