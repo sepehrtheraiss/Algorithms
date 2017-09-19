@@ -3,18 +3,10 @@
 #include <string.h>
 #include "HeapSort.h"
 
-// retuns the lengths of the string plus the number of unique characters
-/*int strlenNunique(char* C,int unique){
-    char* ptr = C;
-    int len = 0;
-    while(*ptr!='\0'){
-        len++;
-    }
-}*/
     typedef struct HuffNode{
         char c;
-        int left;
-        int right;
+        HeapNode* left;
+        HeapNode* right;
     } HuffNode;
 // replaces the identical match of char with $ for efficiency
 // returns the frequency of a character in the given string
@@ -54,10 +46,12 @@ int main()
     Heap h = newHeap(l);
     build_min_heap(h);
     printHeap(stdout,h,'c');
-    // for(int i =0;i<n;i++){
-    //     node* z = malloc(sizeof(node));       
-    //     z->left = 
-    // }
+    for(int i =0;i<n;i++){
+        node* z  = malloc(sizeof(node));       
+        z->left  = Heap_Extract_Min(h);
+        z->right = Heap_Extract_Min(h);
+        Min_Heap_Insert(h,z->left->key+z->right->key,z);
+    }
 
     freeList(&l);
     freeHeap(&h);
