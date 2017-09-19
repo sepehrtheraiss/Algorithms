@@ -536,7 +536,7 @@ void delete(List L)
 // printList()
 // pre: L != NULL
 // Prints data elements in L on a single line to stdout.
-void printList(FILE* out, List L)
+void printList(FILE* out, List L,char type)
 {
     if( L==NULL ){
         printf("List Error: calling delete() on NULL List reference\n");
@@ -545,7 +545,13 @@ void printList(FILE* out, List L)
     moveFront(L);
     while(index(L)!=-1)
     {
-        fprintf(out,"%i",(int)get(L));
+        switch(type){
+            case 'i': fprintf(out,"%i",*(int *) get(L));
+            break;
+            case 's': fprintf(out,"%s",(char *)get(L));
+            break;
+            defualt: fprintf(out,"%p", get(L));
+        }
         moveNext(L);
         if(index(L)!=-1)
         {
@@ -554,25 +560,6 @@ void printList(FILE* out, List L)
     }
     fprintf(out,"\n");
 }
-void printListChar(FILE* out, List L)
-{
-    if( L==NULL ){
-        printf("List Error: calling delete() on NULL List reference\n");
-        exit(EXIT_FAILURE);
-    }
-    moveFront(L);
-    while(index(L)!=-1)
-    {
-        fprintf(out,"%c",(char)get(L));
-        moveNext(L);
-        if(index(L)!=-1)
-        {
-            fprintf(out," ");
-        }
-    }
-    fprintf(out,"\n");
-}
-
 void printListAddress(List l){
     moveFront(l);
     while(index(l)!=-1){
