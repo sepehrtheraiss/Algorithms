@@ -71,6 +71,9 @@ void printHeap(FILE* out,Heap h,char type){
             case 's':
                 fprintf(out,"key:%i data:%s\n",h->A[i]->key,(char *)h->A[i]->data);
                 break;
+            case 'c':
+                fprintf(out,"key:%i data:%c\n",h->A[i]->key,*(char *)h->A[i]->data);
+                break;
             default:
                 fprintf(out,"key:%i data:%p\n",h->A[i]->key,h->A[i]->data);
                 break;
