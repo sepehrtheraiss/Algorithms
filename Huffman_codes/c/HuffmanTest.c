@@ -11,6 +11,11 @@
         len++;
     }
 }*/
+    typedef struct HuffNode{
+        char c;
+        int left;
+        int right;
+    } HuffNode;
 // replaces the identical match of char with $ for efficiency
 // returns the frequency of a character in the given string
 int freq(char c,char* str,int strlen){
@@ -27,23 +32,22 @@ return n;
 void mapFreq(char* C,int strlen,List l){
     char Ccopy[strlen];
     strcpy(Ccopy,C);
+    printf("%s\n",Ccopy);
     for(int i=0;i<strlen;i++){
         if(Ccopy[i] != '$'){
             HeapNode* n = malloc(sizeof(HeapNode));
             n->key = freq(Ccopy[i],Ccopy,strlen);
             printf("c: %c freq: %i\n",Ccopy[i],n->key);
-            n->data = &Ccopy[i];
+            n->data = malloc(sizeof(HuffNode));
+            n->data->c = Ccopy[i];
+            n->data->left  = -1;
+            n->data->right = -1;
             append(l,n);
         }
     }
 }
 int main()
 {
-    typedef struct node{
-        void* huffNode;
-        int left;
-        int right;
-    } node;
     List l = newList();
     char* C = "are mamaman jan bokonam onjaro ay khoda"; 
     int n = strlen(C);
