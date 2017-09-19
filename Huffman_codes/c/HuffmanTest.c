@@ -20,11 +20,12 @@ int freq(char c,char* str,int strlen){
     }
 return n;
 }
-// maps each frequency of the character 
-void mapFreq(char* C,int strlen,List l){
+// maps each frequency of the character and returns the number of uniqe characters
+int mapFreq(char* C,int strlen,List l){
     char Ccopy[strlen];
     strcpy(Ccopy,C);
     printf("%s\n",Ccopy);
+    int u = 0;
     for(int i=0;i<strlen;i++){
         if(Ccopy[i] != '$'){
             HeapNode* n = malloc(sizeof(HeapNode));
@@ -34,19 +35,21 @@ void mapFreq(char* C,int strlen,List l){
             ((HuffNode *)n->data)->right = NULL;
             n->key = freq(Ccopy[i],Ccopy,strlen);
             append(l,n);
+            u++;
         }
     }
+    return u;
 }
 int main()
 {
     List l = newList();
     char* C = "One of the theories of mystery spot is said to be caused by natural hallucinations gas, Welcome to Santa Cruz!"; 
     int n = strlen(C);
-    mapFreq(C,n,l);
+    int u = mapFreq(C,n,l);
     Heap h = newHeap(l);
     build_min_heap(h);
     printHeap(stdout,h,'c');
-    for(int i =0;i<HeapSize(h);i++){
+    for(int i =0;i<u;i++){
         HuffNode* z  = malloc(sizeof(HuffNode));       
         z->left  = Heap_Extract_Min(h);
         z->right = Heap_Extract_Min(h);
