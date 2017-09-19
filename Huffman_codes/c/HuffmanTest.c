@@ -36,7 +36,6 @@ void mapFreq(char* C,int strlen,List l){
     for(int i=0;i<strlen;i++){
         if(Ccopy[i] != '$'){
             HeapNode* n = malloc(sizeof(HeapNode));
-            printf("c: %c freq: %i\n",Ccopy[i],n->key);
             n->data = malloc(sizeof(HuffNode));
             ((HuffNode *)n->data)->c     = Ccopy[i];
             ((HuffNode *)n->data)->left  = -1;
@@ -49,7 +48,7 @@ void mapFreq(char* C,int strlen,List l){
 int main()
 {
     List l = newList();
-    char* C = "are mamaman jan bokonam onjaro ay khoda"; 
+    char* C = "One of the theories of mystery spot is said to be caused by natural hallucinations gas, Welcome to Santa Cruz!"; 
     int n = strlen(C);
     mapFreq(C,n,l);
     Heap h = newHeap(l);

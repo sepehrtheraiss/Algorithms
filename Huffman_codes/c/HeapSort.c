@@ -72,7 +72,7 @@ void printHeap(FILE* out,Heap h,char type){
                 fprintf(out,"key:%i data:%s\n",h->A[i]->key,(char *)h->A[i]->data);
                 break;
             case 'c':
-                fprintf(out,"key:%i data:%c\n",h->A[i]->key,*(char *)h->A[i]->data);
+                fprintf(out,"key:%i data:%c\n",h->A[i]->key,*(char *)h->A[i]->data); // how it worked ? I have data->c and other stuff
                 break;
             default:
                 fprintf(out,"key:%i data:%p\n",h->A[i]->key,h->A[i]->data);
