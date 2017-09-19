@@ -23,15 +23,22 @@ int freq(char c,char* str,int strlen){
     }
 return n;
 }
-// maps each frequency of character to it's alphabet
-void mapFreq(char* C,int strlen,List CfreqList,List uniqueChars){
+// maps each frequency of the character 
+void mapFreq(char* C,int strlen,List l){
+
+    typedef struct HuffNode{
+        int freq;
+        char c;
+    }HuffNode;
+
     char Ccopy[strlen];
     strcpy(Ccopy,C);
-    
     for(int i=0;i<strlen;i++){
         if(Ccopy[i] != '$'){
-            append(uniqueChars,Ccopy[i]);
-            append(CfreqList,freq(Ccopy[i],Ccopy,strlen));
+            HuffNode* n = malloc(sizeof(HuffNode));
+            n->freq = freq(Ccopy[i],Ccopy,strlen);
+            n->c = Ccopy[i];
+            append(l,n);
         }
     }
 }
@@ -42,14 +49,14 @@ int main()
         int left;
         int right;
     } node;
-    List freqList = newList();
-    List uniqueList = newList();
+    List l = newList();
     char* C = "are mamaman jan bokonam onjaro ay khoda"; 
     int n = strlen(C);
-    mapFreq(C,n,freqList,uniqueList);
-    printListChar(stdout,uniqueList);
-    printList(stdout,freqList);
-    freeList(&uniqueList);
-    freeList(&freqList);
+    mapFreq(C,n,l);
+    Heap h = newHeap(l);
+    build_min_heap(h);
+
+    freeList(&l);
+    freeHeap(&h);
     return 0;
 }

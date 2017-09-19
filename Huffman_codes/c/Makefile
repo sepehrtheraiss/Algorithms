@@ -41,7 +41,7 @@ $(BASE_OBJECTS) : $(BASE_SOURCES) $(HEADERS)
 	$(COMPILE) $(BASE_SOURCES)
 
 clean :
-	$(REMOVE)  test test.o HuffmanTest HeapTest.o HeapClient.o $(BASE_OBJECTS)
+	$(REMOVE)  HuffmanTest HeapTest ListTest *.o
 
 checkTest : HuffmanTest
 	$(MEMCHECK) ./HuffmanTest

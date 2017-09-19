@@ -4,7 +4,7 @@ int main()
 {
     List l = newList();
     for(int i =0;i<5;i++){
-        node* n = malloc(sizeof(node));
+        HeapNode* n = malloc(sizeof(HeapNode));
         n->key = i+1;
         n->data = "something";
         append(l,n);
@@ -34,7 +34,7 @@ int main()
     freeHeap(&h);
     printf("****************TEST CASE #4****************\n");
      for(int i =0;i<5;i++){
-        node* n = malloc(sizeof(node));
+        HeapNode* n = malloc(sizeof(HeapNode));
         n->key = i+1;
         n->data = "something";
         append(l,n);
@@ -50,7 +50,7 @@ int main()
     Min_Heap_Insert(h,8,"MIRAM!");
     Min_Heap_Insert(h,10,"PAS CHI!!");
     printHeap(stdout,h,'s');
-    node* n = Heap_Extract_Min(h);
+    HeapNode* n = Heap_Extract_Min(h);
     printf("key:%i data:%s\n",n->key,n->data);
     freeHeap(&h);
     freeList(&l);
