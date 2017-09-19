@@ -137,7 +137,7 @@ void delete(List L);
 // printList()
 // pre: L != NULL
 // Prints data elements in L on a single line to stdout.
-void printList(FILE* out, List L);
+void printList(FILE* out, List L,char type);
 void printListAddress(List l);
 
 // pre: L != NULL

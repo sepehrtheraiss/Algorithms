@@ -550,7 +550,8 @@ void printList(FILE* out, List L,char type)
             break;
             case 's': fprintf(out,"%s",(char *)get(L));
             break;
-            defualt: fprintf(out,"%p", get(L));
+            default: fprintf(out,"%p", get(L));
+            break;
         }
         moveNext(L);
         if(index(L)!=-1)
