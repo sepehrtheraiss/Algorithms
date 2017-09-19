@@ -275,18 +275,6 @@ void Heap_Decrease_Key(Heap h,int i,int key){
 
 void Min_Heap_Insert(Heap h,int key,void* data){
     h->size++;
-    /*int t = h->size++;
-    if(h->size >= h->length){
-         Heap copy = copyHeap(h);
-         freeHeap(&h);
-         h = malloc(sizeof(HeapSortObj));
-         h->A = malloc(sizeof(HeapNode) * (copy->length*2) );
-         h->length = copy->length*2;
-         h->size = t;
-         for(int i =1;i<= copy->size;i++){
-            h->A[i] = copy->A[i];
-        }
-        freeHeap(&copy);*/
     if(h->A == NULL){
         if(h->length == 0){
             h->length = 10;
