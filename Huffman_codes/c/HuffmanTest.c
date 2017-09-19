@@ -25,19 +25,13 @@ return n;
 }
 // maps each frequency of the character 
 void mapFreq(char* C,int strlen,List l){
-
-    typedef struct HuffNode{
-        int freq;
-        char c;
-    }HuffNode;
-
     char Ccopy[strlen];
     strcpy(Ccopy,C);
     for(int i=0;i<strlen;i++){
         if(Ccopy[i] != '$'){
-            HuffNode* n = malloc(sizeof(HuffNode));
-            n->freq = freq(Ccopy[i],Ccopy,strlen);
-            n->c = Ccopy[i];
+            HeapNode* n = malloc(sizeof(HeapNode));
+            n->key = freq(Ccopy[i],Ccopy,strlen);
+            n->data = &Ccopy[i];
             append(l,n);
         }
     }
@@ -45,7 +39,7 @@ void mapFreq(char* C,int strlen,List l){
 int main()
 {
     typedef struct node{
-        int freq;
+        void* huffNode;
         int left;
         int right;
     } node;
@@ -55,6 +49,11 @@ int main()
     mapFreq(C,n,l);
     Heap h = newHeap(l);
     build_min_heap(h);
+    printHeap(stdout,h,'s');
+    // for(int i =0;i<n;i++){
+    //     node* z = malloc(sizeof(node));       
+    //     z->left = 
+    // }
 
     freeList(&l);
     freeHeap(&h);
