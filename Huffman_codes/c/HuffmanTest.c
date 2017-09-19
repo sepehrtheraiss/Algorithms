@@ -30,8 +30,8 @@ void mapFreq(char* C,int strlen,List l){
             HeapNode* n = malloc(sizeof(HeapNode));
             n->data = malloc(sizeof(HuffNode));
             ((HuffNode *)n->data)->c     = Ccopy[i];
-            ((HuffNode *)n->data)->left  = -1;
-            ((HuffNode *)n->data)->right = -1;
+            ((HuffNode *)n->data)->left  = NULL;
+            ((HuffNode *)n->data)->right = NULL;
             n->key = freq(Ccopy[i],Ccopy,strlen);
             append(l,n);
         }
@@ -47,7 +47,7 @@ int main()
     build_min_heap(h);
     printHeap(stdout,h,'c');
     for(int i =0;i<n;i++){
-        node* z  = malloc(sizeof(node));       
+        HuffNode* z  = malloc(sizeof(HuffNode));       
         z->left  = Heap_Extract_Min(h);
         z->right = Heap_Extract_Min(h);
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
