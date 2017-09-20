@@ -40,6 +40,10 @@ int mapFreq(char* C,int strlen,List l){
     }
     return u;
 }
+// will traverse inorder and assign 0 for going left and 1 for right to the character
+void inorder_decoding(Heap h){
+    
+}
 int main()
 {
     List l = newList();
@@ -55,7 +59,13 @@ int main()
         z->right = Heap_Extract_Min(h);
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
     }
-    printHeap(stdout,h,'c');
+    //printHeap(stdout,h,'c');
+    typedef struct node{
+        char c;
+        int code;
+    }node;
+    node* decode = malloc(sizeof(node)*u);
+    printf("max tree depth: %i\n",HeapMaxDepth(h));
     freeList(&l);
     freeHeap(&h);
     return 0;

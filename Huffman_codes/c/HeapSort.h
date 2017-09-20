@@ -24,14 +24,16 @@ Heap newHeap(List list);
 void freeHeap(Heap* pH);
 
 // Helper functions -------------------------------------------------------------
-
 // returns index
 int parent(int i);
 int left(int i);
 int right(int i);
-void swapHeap(Heap h,int i,int j);
+
+
 int HeapLength(Heap h);
 int HeapSize(Heap h);
+int HeapMaxDepth(Heap h);
+void swapHeap(Heap h,int i,int j);
 void clearHeap(Heap h);
 void printHeap(FILE* out,Heap h,char type);
 void printHeapMemAddress(Heap h);
