@@ -65,7 +65,7 @@ int main()
         int code;
     }node;
     node* decode = malloc(sizeof(node)*u);
-    printf("max tree depth: %i\n",HeapMaxDepth(h));
+    printf("max tree depth: %i\n",HeapMaxDepth(h,1));
     freeList(&l);
     freeHeap(&h);
     return 0;
