@@ -300,7 +300,8 @@ void Min_Heap_Insert(Heap h,int key,void* data){
     h->A[h->size]->key = INT_MAX;
     h->A[h->size]->data = data;
     Heap_Decrease_Key(h,h->size,key);
-} 
+}
+/*
 int maxDepth(Heap h,int i){
      int lDepth = maxDepth(h,h->A[left(i)]);   
      int rDepth = maxDepth(h,h->A[right(i)]);   
@@ -313,16 +314,23 @@ int maxDepth(Heap h,int i){
      }
  
 }
-int HeapMaxDepth(Heap h){
-    if(h->length == 0){return 0;}
+*/
+int HeapMaxDepth(Heap h,int i){
+    if(i > h->length){return 0;}
     else{
-     int lDepth = maxDepth(h,h->A[left(1)]);   
-     int rDepth = maxDepth(h,h->A[right(1)]);   
-
-     if(lDepth > rDepth){
-        return(lDepth+1);
-     }
-     else{
+        int lDepth = 0;
+        int rDepth = 0;
+        if(h->A[left(1)]!= NULL){
+            lDepth = HeapMaxDepth(h,h->A[left(1)]);   
+        }
+        if(h->A[right(1)!=NULL]){
+            rDepth = HeapMaxDepth(h,h->A[right(1)]);   
+        }
+        
+        if(lDepth > rDepth){
+            return(lDepth+1);
+         }
+        else{
         return(rDepth+1);
      }
     }
