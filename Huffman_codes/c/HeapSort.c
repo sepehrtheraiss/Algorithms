@@ -318,15 +318,8 @@ int maxDepth(Heap h,int i){
 int HeapMaxDepth(Heap h,int i){
     if(i > h->length){return 0;}
     else{
-        int lDepth = 0;
-        int rDepth = 0;
-        if(h->A[left(1)]!= NULL){
-            lDepth = HeapMaxDepth(h,h->A[left(1)]);   
-        }
-        if(h->A[right(1)!=NULL]){
-            rDepth = HeapMaxDepth(h,h->A[right(1)]);   
-        }
-        
+        int lDepth = HeapMaxDepth(h,left(i));   
+        int rDepth = HeapMaxDepth(h,right(i));   
         if(lDepth > rDepth){
             return(lDepth+1);
          }
