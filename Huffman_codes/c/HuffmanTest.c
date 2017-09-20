@@ -41,10 +41,12 @@ int mapFreq(char* C,int strlen,List l){
     return u;
 }
 // will traverse inorder and assign 0 for going left and 1 for right to the character
-void inorder(HuffNode* node){
-    inorder_decoding(node->left);
-    printf("%c\n",node->c);
-    inorder_decoding(node->right);
+void inorder(HuffNode* n){
+    if(n!=NULL){
+    inorder(n->left->data);
+    printf("key:%i\n",n->c);
+    inorder(n->right->data);
+    }
 }
 int main()
 {
@@ -58,17 +60,21 @@ int main()
     for(int i =0;i<u-1;i++){
         HuffNode* z  = malloc(sizeof(HuffNode));       
         z->left  = Heap_Extract_Min(h);
+        printf("left key:%i\n",z->left->key);
         z->right = Heap_Extract_Min(h);
+        printf("right key:%i\n",z->right->key);
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
+        printf("heap min: %i\n",Heap_Minimum(h)->key);
     }
     //printHeap(stdout,h,'c');
-    typedef struct node{
+   /* typedef struct node{
         char c;
         int code;
-    }node;
+    }node;*/
 //    node* decode = malloc(sizeof(node)*u);
-    printf("max tree depth: %i\n",HeapMaxDepth(h,1));
-    inorder(Heap_Minimum(h));
+    printf("max tree depth: %i\n",HeapDepth(h,1));
+  //  inorder((HuffNode*)Heap_Minimum(h)->data);
+ //   printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
     freeHeap(&h);
     return 0;
