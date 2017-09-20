@@ -29,10 +29,10 @@ int parent(int i);
 int left(int i);
 int right(int i);
 
-
 int HeapLength(Heap h);
 int HeapSize(Heap h);
-int HeapMaxDepth(Heap h);
+int HeapMaxDepth(Heap h,int i);
+
 void swapHeap(Heap h,int i,int j);
 void clearHeap(Heap h);
 void printHeap(FILE* out,Heap h,char type);
