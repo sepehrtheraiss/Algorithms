@@ -71,7 +71,7 @@ void printHeap(FILE* out,Heap h,char type){
                 fprintf(out,"key:%i data:%s\n",h->A[i]->key,(char *)h->A[i]->data);
                 break;
             case 'c':
-                fprintf(out,"key:%i data:%c\n",h->A[i]->key,*(char *)h->A[i]->data); // how it worked ? I have data->c and other stuff, it takes the first pointer somehow
+                fprintf(out,"key:%i data:%c\n",h->A[i]->key,*(char *)h->A[i]->data->c); // flaw (*char*)h->A[]->data gets the first struct var 
                 break;
             default:
                 fprintf(out,"key:%i data:%p\n",h->A[i]->key,h->A[i]->data);
@@ -172,18 +172,6 @@ void Heap_Increase_Key(Heap h,int i,int key){
 
 void Max_Heap_Insert(Heap h,int key,void* data){
     h->size++;
-    /*if(h->size >= h->length){
-         Heap copy = copyHeap(h);
-         freeHeap(&h);
-         h = malloc(sizeof(HeapSortObj));
-         h->A = malloc(sizeof(HeapNode) * (copy->size*2) );
-         h->length = copy->size*2;
-         h->size = t;
-         for(int i =1;i<= copy->size;i++){
-            h->A[i] = copy->A[i];
-        }
-        freeHeap(&copy);
-    }*/
     if(h->A == NULL){
         if(h->length == 0){
             h->length = 10;
