@@ -1,7 +1,6 @@
 #include "HeapSort.h"
 #include <limits.h>
 // strcuts ---------------------------------------------------------------------
-typedef struct HeapNodeObj{int key;void* data;}HeapNodeObj;
 typedef struct HeapSortObj {
         HeapNode** A;
 	int size;

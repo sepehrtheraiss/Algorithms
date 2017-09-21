@@ -8,12 +8,10 @@
 // build max heap O(n) produces a max heap from an unordered input array
 // heaposort O(n lg n) sorts an array 
 // max-heap-insert, heap-extract-max, heap-increase-key and heap-maximum O(lg n) implementation for priority queue
-typedef struct HeapNodeObj HeapNode;
-/*typedef struct HeapNode {
+typedef struct HeapNode{
     int key;
     void* data;
-}HeapNode;*/
-//typedef struct HeapNode HeapNode;
+    }HeapNode;
 typedef struct HeapSortObj* Heap;
 
 // constructors-Destructors ----------------------------------------------------
