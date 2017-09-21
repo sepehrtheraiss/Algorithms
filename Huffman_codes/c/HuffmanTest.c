@@ -60,11 +60,9 @@ int main()
     for(int i =0;i<u-1;i++){
         HuffNode* z  = malloc(sizeof(HuffNode));       
         z->left  = Heap_Extract_Min(h);
-        //printf("left :%p\n",z->left);
         z->right = Heap_Extract_Min(h);
-        //printf("right :%p\n",z->right);
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
-        printf("heap min : %c\n",((HuffNode*)Heap_Minimum(h)->data)->c);
+        //printf("heap min : %c\n",((HuffNode*)Heap_Minimum(h)->data)->c);
     }
     //printHeap(stdout,h,'c');
    /* typedef struct node{

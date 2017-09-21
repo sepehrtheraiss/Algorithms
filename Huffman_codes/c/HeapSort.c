@@ -71,7 +71,7 @@ void printHeap(FILE* out,Heap h,char type){
                 fprintf(out,"key:%i data:%s\n",h->A[i]->key,(char *)h->A[i]->data);
                 break;
             case 'c':
-                fprintf(out,"key:%i data:%c\n",h->A[i]->key,*(char *)h->A[i]->data->c); // flaw (*char*)h->A[]->data gets the first struct var 
+                fprintf(out,"key:%i data:%c\n",h->A[i]->key,*(char *)h->A[i]->data); // flaw (*char*)h->A[]->data gets the first struct var 
                 break;
             default:
                 fprintf(out,"key:%i data:%p\n",h->A[i]->key,h->A[i]->data);
