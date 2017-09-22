@@ -43,9 +43,15 @@ int mapFreq(char* C,int strlen,List l){
 // will traverse inorder and assign 0 for going left and 1 for right to the character
 void inorder(HuffNode* n){
     if(n!=NULL){
-    inorder(n->left->data);
-    printf("key:%i\n",n->c);
-    inorder(n->right->data);
+        if(n->left != NULL){
+            inorder((HuffNode*)n->left->data);
+        }
+    if(n->left == NULL && n->right == NULL){
+        printf("key:%i\n",n->c);
+    }
+        if(n->right != NULL){
+            inorder((HuffNode*)n->right->data);
+        }
     }
 }
 int main()
@@ -60,9 +66,11 @@ int main()
     for(int i =0;i<u-1;i++){
         HuffNode* z  = malloc(sizeof(HuffNode));       
         z->left  = Heap_Extract_Min(h);
+        printf("left: %p ",z->left);
         z->right = Heap_Extract_Min(h);
+        printf("right: %p\n",z->right);
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
-        //printf("heap min : %c\n",((HuffNode*)Heap_Minimum(h)->data)->c);
+        //printf("heap min left: %p right: %p\n",((HuffNode*)Heap_Minimum(h)->data)->left,((HuffNode*)Heap_Minimum(h)->data)->left);
     }
     //printHeap(stdout,h,'c');
    /* typedef struct node{
@@ -71,7 +79,7 @@ int main()
     }node;*/
 //    node* decode = malloc(sizeof(node)*u);
     printf("max tree depth: %i\n",HeapDepth(h,1));
-  //  inorder((HuffNode*)Heap_Minimum(h)->data);
+    inorder((HuffNode*)Heap_Minimum(h)->data);
  //   printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
     freeHeap(&h);
