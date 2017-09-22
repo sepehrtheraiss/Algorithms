@@ -63,6 +63,7 @@ int main()
     Heap h = newHeap(l);
     build_min_heap(h);
     printHeap(stdout,h,'c');
+    printf("u:%i\n",u);
     for(int i =0;i<u-1;i++){
         HuffNode* z  = malloc(sizeof(HuffNode));       
         z->left  = Heap_Extract_Min(h);
