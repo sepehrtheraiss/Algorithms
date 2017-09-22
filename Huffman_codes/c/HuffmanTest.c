@@ -66,10 +66,11 @@ int main()
     printf("u:%i\n",u);
     for(int i =0;i<u-1;i++){
         HuffNode* z  = malloc(sizeof(HuffNode));       
+        z->c = '$';
         z->left  = Heap_Extract_Min(h);
-        printf("left: %p ",z->left);
+        printf("left: %c ",(HuffNode*)(z->left->data)->c);
         z->right = Heap_Extract_Min(h);
-        printf("right: %p\n",z->right);
+        printf("right: %c\n",(HuffNode*)z->right->data->c);
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
         //printf("heap min left: %p right: %p\n",((HuffNode*)Heap_Minimum(h)->data)->left,((HuffNode*)Heap_Minimum(h)->data)->left);
     }
@@ -80,7 +81,7 @@ int main()
     }node;*/
 //    node* decode = malloc(sizeof(node)*u);
     printf("max tree depth: %i\n",HeapDepth(h,1));
-    inorder((HuffNode*)Heap_Minimum(h)->data);
+    //inorder((HuffNode*)Heap_Minimum(h)->data);
  //   printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
     freeHeap(&h);
