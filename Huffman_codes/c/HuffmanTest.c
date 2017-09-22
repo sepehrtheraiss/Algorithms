@@ -65,12 +65,16 @@ int main()
     printHeap(stdout,h,'c');
     printf("u:%i\n",u);
     for(int i =0;i<u-1;i++){
-        HuffNode* z  = malloc(sizeof(HuffNode));       
+        HuffNode* z  = malloc(sizeof(HuffNode));
+        //printf("size:%i\n",HeapSize(h));
         z->left  = Heap_Extract_Min(h);
-        printf("left: %p ",z->left);
+        //printf("left: %c ",((HuffNode*)(z->left->data))->c);
+        //printf("size:%i ",HeapSize(h));
         z->right = Heap_Extract_Min(h);
-        printf("right: %p\n",z->right);
+        //printf("right: %c ",z->c);
+        //printf("size:%i \n",HeapSize(h));
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
+        printf("size:%i \n",HeapSize(h));
         //printf("heap min left: %p right: %p\n",((HuffNode*)Heap_Minimum(h)->data)->left,((HuffNode*)Heap_Minimum(h)->data)->left);
     }
     //printHeap(stdout,h,'c');
