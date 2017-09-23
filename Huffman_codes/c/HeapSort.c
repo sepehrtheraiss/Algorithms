@@ -262,7 +262,31 @@ void Heap_Decrease_Key(Heap h,int i,int key){
 
 void Min_Heap_Insert(Heap h,int key,void* data){
     h->size++;
-    if(h->A == NULL){
+    if(h !=NULL){
+    //okay to go
+        if(h->A != NULL ){
+            if(h->size > h->length){
+                h->length *= 2;
+                h->A = realloc(h->A,sizeof(HeapNode) * (h->length));
+                printf("length increased to: %i\n",h->length);   
+            }
+            h->A[h->size] = malloc(sizeof(HeapNode));
+            h->A[h->size]->key = INT_MAX;
+            h->A[h->size]->data = data;
+            Heap_Decrease_Key(h,h->size,key);
+            printf("Heap size incresed to: %i\n",h->size);
+
+        }
+        else{     
+            fprintf(stderr,"h->A is null\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+    else{
+        fprintf(stderr,"h is null\n");
+        exit(EXIT_FAILURE);
+    }
+/*    if(h->A == NULL){
         if(h->length == 0){
             h->length = 10;
         }
@@ -288,6 +312,7 @@ void Min_Heap_Insert(Heap h,int key,void* data){
     h->A[h->size]->key = INT_MAX;
     h->A[h->size]->data = data;
     Heap_Decrease_Key(h,h->size,key);
+    */
 }
 int HeapDepth(Heap h,int i){
     if(i > h->length){return 0;}
