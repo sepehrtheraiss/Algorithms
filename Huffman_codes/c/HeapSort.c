@@ -71,7 +71,7 @@ void printHeap(FILE* out,Heap h,char type){
                 fprintf(out,"key:%i data:%s\n",h->A[i]->key,(char *)h->A[i]->data);
                 break;
             case 'c':
-                fprintf(out,"key:%i data:%c\n",h->A[i]->key,*(char *)h->A[i]->data); // flaw (*char*)h->A[]->data gets the first struct var 
+                fprintf(out,"key:%i data:%c\n",h->A[i]->key,*(char *)h->A[i]->data); // flaw *(*char)h->A[]->data gets the first struct var 
                 break;
             default:
                 fprintf(out,"key:%i data:%p\n",h->A[i]->key,h->A[i]->data);
@@ -274,7 +274,7 @@ void Min_Heap_Insert(Heap h,int key,void* data){
             h->A[i] = n;
         }
     }
-    if(h->size >= h->length){
+    if(h->size > h->length){
         h->A = realloc(h->A,sizeof(HeapNode) * (h->length * 2) );
         h->length = h->size * 2;
         for(int i = h->size; i < h->length;i++){
@@ -284,6 +284,7 @@ void Min_Heap_Insert(Heap h,int key,void* data){
             h->A[i] = n;
         }
     }
+    printf("min heap insert %i %c \n",h->A[h->size]->key,*(char *)h->A[h->size]->data);
     h->A[h->size]->key = INT_MAX;
     h->A[h->size]->data = data;
     Heap_Decrease_Key(h,h->size,key);

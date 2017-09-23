@@ -57,34 +57,35 @@ void inorder(HuffNode* n){
 int main()
 {
     List l = newList();
-    char* C = "One of the theories of mystery spot is said to be caused by natural hallucinations gas, Welcome to Santa Cruz!"; 
+    //char* C = "One of the theories of mystery spot is said to be caused by natural hallucinations gas, Welcome to Santa Cruz!"; 
+    char* C="sepehr";
     int n = strlen(C);
     int u = mapFreq(C,n,l);
     Heap h = newHeap(l);
     build_min_heap(h);
+    printf("size: %i length: %i \n", HeapSize(h),HeapLength(h));
     printHeap(stdout,h,'c');
     printf("u:%i\n",u);
     for(int i =0;i<u-1;i++){
-<<<<<<< HEAD
         HuffNode* z  = malloc(sizeof(HuffNode));       
         z->c = '$';
+            //printf("left: %c ",((HuffNode*)Heap_Minimum(h)->data)->c);
+            //printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+            //printHeap(stdout,h,'c');
         z->left  = Heap_Extract_Min(h);
-        printf("left: %c ",(HuffNode*)(z->left->data)->c);
+            //printf("extracted\n");
+            //printHeap(stdout,h,'c');
+            //printf("right: %c\n",((HuffNode*)Heap_Minimum(h)->data)->c);
         z->right = Heap_Extract_Min(h);
-        printf("right: %c\n",(HuffNode*)z->right->data->c);
-=======
-        HuffNode* z  = malloc(sizeof(HuffNode));
-        //printf("size:%i\n",HeapSize(h));
-        z->left  = Heap_Extract_Min(h);
-        //printf("left: %c ",((HuffNode*)(z->left->data))->c);
-        //printf("size:%i ",HeapSize(h));
-        z->right = Heap_Extract_Min(h);
-        //printf("right: %c ",z->c);
-        //printf("size:%i \n",HeapSize(h));
->>>>>>> 14f3039f6a1ac77d2ade4b9deef6850274e24757
+            //printf("extracted\n");
+            //printHeap(stdout,h,'c');
+            //printf("to be inserted: %i\n",z->left->key+z->right->key);
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
-        printf("size:%i \n",HeapSize(h));
-        //printf("heap min left: %p right: %p\n",((HuffNode*)Heap_Minimum(h)->data)->left,((HuffNode*)Heap_Minimum(h)->data)->left);
+            //printf("inserted\n");
+            //printHeap(stdout,h,'c');
+            //printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+            //printf("freq: %i\n",Heap_Minimum(h)->key);
+            //printf("heap min left: %p right: %p\n",((HuffNode*)Heap_Minimum(h)->data)->left,((HuffNode*)Heap_Minimum(h)->data)->left);
     }
     //printHeap(stdout,h,'c');
    /* typedef struct node{
@@ -93,7 +94,8 @@ int main()
     }node;*/
 //    node* decode = malloc(sizeof(node)*u);
     printf("max tree depth: %i\n",HeapDepth(h,1));
-    //inorder((HuffNode*)Heap_Minimum(h)->data);
+   printf("%i\n",Heap_Minimum(h)->key);
+   // inorder((HuffNode*)Heap_Minimum(h)->data);
  //   printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
     freeHeap(&h);
