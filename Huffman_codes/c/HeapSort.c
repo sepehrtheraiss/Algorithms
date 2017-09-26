@@ -13,6 +13,10 @@ Heap newHeap(List list){
 	Heap h  = malloc(sizeof(HeapSortObj));
 	h->A = malloc( sizeof(HeapNode)* (length(list)+1) ) ; // A[0] will not be used
 	h->length = h->size = length(list);
+        h->A[0] = malloc(sizeof(HeapNode*));
+        h->A[0]->key = 0;
+        h->A[0]->data = "this is the zero index not used\n";
+
         for(int i = 1; i <= h->length; i++){
             h->A[i] = (HeapNode *)pop(list);
         }
@@ -172,32 +176,30 @@ void Heap_Increase_Key(Heap h,int i,int key){
 
 void Max_Heap_Insert(Heap h,int key,void* data){
     h->size++;
-    if(h->A == NULL){
-        if(h->length == 0){
-            h->length = 10;
+    if(h !=NULL){
+        if(h->A != NULL ){
+            if(h->size > h->length){
+                h->length *= 2;
+                h->A = realloc(h->A,sizeof(HeapNode) * (h->length));
+                printf("length increased to: %i\n",h->length);   
+            }
+            h->A[h->size] = malloc(sizeof(HeapNode));
+            h->A[h->size]->key = INT_MIN;
+            h->A[h->size]->data = data;
+            Heap_Increase_Key(h,h->size,key);
+            printf("Heap size incresed to: %i\n",h->size);
+
         }
-        h->A = malloc(sizeof(HeapNode)*h->length);
-        for(int i=1; i < h->length;i++){
-            HeapNode* n = malloc(sizeof(HeapNode));
-            n->key = 0;
-            n->data = NULL;
-            h->A[i] = n;
+        else{     
+            fprintf(stderr,"h->A is null\n");
+            exit(EXIT_FAILURE);
         }
     }
-    if(h->size >= h->length){
-        h->A = realloc(h->A,sizeof(HeapNode) * (h->length * 2) );
-        h->length = h->size * 2;
-        for(int i = h->size; i < h->length;i++){
-            HeapNode* n = malloc(sizeof(HeapNode));
-            n->key = 0;
-            n->data = NULL;
-            h->A[i] = n;
-        }
+    else{
+        fprintf(stderr,"h is null\n");
+        exit(EXIT_FAILURE);
     }
 
-    h->A[h->size]->key = INT_MIN;
-    h->A[h->size]->data = data;
-    Heap_Increase_Key(h,h->size,key);
 }   
 // Min Heap Sort ------------------------------------------------------
 void min_heapify(Heap h,int i){
@@ -263,7 +265,6 @@ void Heap_Decrease_Key(Heap h,int i,int key){
 void Min_Heap_Insert(Heap h,int key,void* data){
     h->size++;
     if(h !=NULL){
-    //okay to go
         if(h->A != NULL ){
             if(h->size > h->length){
                 h->length *= 2;
@@ -286,34 +287,8 @@ void Min_Heap_Insert(Heap h,int key,void* data){
         fprintf(stderr,"h is null\n");
         exit(EXIT_FAILURE);
     }
-/*    if(h->A == NULL){
-        if(h->length == 0){
-            h->length = 10;
-        }
-        h->A = malloc(sizeof(HeapNode)*h->length);
-        for(int i=1; i < h->length;i++){
-            HeapNode* n = malloc(sizeof(HeapNode));
-            n->key = 0;
-            n->data = NULL;
-            h->A[i] = n;
-        }
-    }
-    if(h->size > h->length){
-        h->A = realloc(h->A,sizeof(HeapNode) * (h->length * 2) );
-        h->length = h->size * 2;
-        for(int i = h->size; i < h->length;i++){
-            HeapNode* n = malloc(sizeof(HeapNode));
-            n->key = 0;
-            n->data = NULL;
-            h->A[i] = n;
-        }
-    }
-    printf("min heap insert %i %c \n",h->A[h->size]->key,*(char *)h->A[h->size]->data);
-    h->A[h->size]->key = INT_MAX;
-    h->A[h->size]->data = data;
-    Heap_Decrease_Key(h,h->size,key);
-    */
-}
+}    
+
 int HeapDepth(Heap h,int i){
     if(i > h->length){return 0;}
     else{
