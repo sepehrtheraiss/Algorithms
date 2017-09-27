@@ -41,22 +41,62 @@ int mapFreq(char* C,int strlen,List l){
     return u;
 }
 // will traverse inorder and assign 0 for going left and 1 for right to the character
-void inorder(HuffNode* n){
+void inorder(HuffNode* n,int i){
     if(n!=NULL){
-        if(n->left != NULL && n->right != NULL){
-        inorder((HuffNode*)n->left->data);
-        inorder((HuffNode*)n->right->data);
+        if(n->left != NULL){
+            i *=2;
+            inorder((HuffNode*)n->left->data,i);
+        }
+        if(n->right != NULL){
+            i = (i*2) + 1;
+            inorder((HuffNode*)n->right->data,i);
+        }
+        if(n->left == NULL && n->right == NULL){
+            printf("c: %c i:%i\n",n->c,i);
+        }
+        i /=2; // traversing up the tree
+/*        if(n->left != NULL && n->right != NULL){
+        
+        i *= 2;
+        inorder((HuffNode*)n->left->data,i);
+        i = (i*2) + 1
+        inorder((HuffNode*)n->right->data,i);
+        i = (i/4) - 1;    
         }
         else{
+            i/2;
+            printf("i: %i\n",i);
             printf("character:%c\n",n->c);
-        }
+        }*/
     }
 }
 int main()
 {
     List l = newList();
     //char* C = "One of the theories of mystery spot is said to be caused by natural hallucinations gas, Welcome to Santa Cruz!"; 
-    char* C="sepehr";
+    //char* C="sepehr";
+    char* C = malloc(sizeof(100));
+    for(int i = 0;i<100;i++){
+        if(i <45){
+            C[i] = 'a';
+        }
+        else if(i >= 45 && i < 58){
+            C[i] = 'b';
+        }
+        else if(i >= 58 && i < 70){
+            C[i] = 'c';
+        }
+        else if(i >= 70 && i < 86){
+            C[i] = 'd';
+        }
+        else if(i >= 86 && i < 95){
+            C[i] = 'e';
+        }
+        else{
+            C[i] = 'f';
+        }
+    }
+
     int n = strlen(C);
     int u = mapFreq(C,n,l);
     Heap h = newHeap(l);
@@ -71,14 +111,16 @@ int main()
         z->right = Heap_Extract_Min(h);
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
     }
-   /* typedef struct node{
+/*    typedef struct codeNode{
         char c;
         int code;
-    }node;*/
-//    node* decode = malloc(sizeof(node)*u);
+    }codeNode;
+    codeNode* cd = malloc(sizeof(codeNode)*u);*/
+
     printf("max tree depth: %i\n",HeapDepth(h,1));
     printf("%i\n",Heap_Minimum(h)->key);
-    inorder((HuffNode*)Heap_Minimum(h)->data);
+    //printf("%c\n",((HuffNode*)((HuffNode*)Heap_Minimum(h)->data)->left->data)->c);
+    inorder((HuffNode*)Heap_Minimum(h)->data,0);
  //   printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
     freeHeap(&h);

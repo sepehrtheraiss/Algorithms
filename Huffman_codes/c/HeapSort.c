@@ -38,8 +38,8 @@ void freeHeap(Heap* pH){
 // Helper functions -------------------------------------------------------------
 // returns index
 int parent(int i){return i/2;}
-int left(int i){return (i << 1);} // i *2 
-int right(int i){return ((i << 1) | 1);}; // because I can and its faster
+int left(int i){return (i*2);} // i << 1 
+int right(int i){return (i*2)+1;} // i << 1 | 1
 void swapHeap(Heap h,int i,int j){
    HeapNode* temp =  h->A[i];
    h->A[i] = h->A[j];
