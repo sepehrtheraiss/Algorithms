@@ -5,6 +5,7 @@
 
     typedef struct HuffNode{
         char c;
+        int code;
         HeapNode* left;
         HeapNode* right;
     } HuffNode;
@@ -40,35 +41,51 @@ int mapFreq(char* C,int strlen,List l){
     }
     return u;
 }
-// will traverse inorder and assign 0 for going left and 1 for right to the character
-void inorder(HuffNode* n,int i){
-    if(n!=NULL){
-        if(n->left != NULL){
-            i *=2;
-            inorder((HuffNode*)n->left->data,i);
-        }
-        if(n->right != NULL){
-            i = (i*2) + 1;
-            inorder((HuffNode*)n->right->data,i);
-        }
-        if(n->left == NULL && n->right == NULL){
-            printf("c: %c i:%i\n",n->c,i);
-        }
-        i /=2; // traversing up the tree
-/*       if(n->left != NULL && n->right != NULL){
-       printf("0\n"); 
-        inorder((HuffNode*)n->left->data,i);
-        printf("1\n");
-        inorder((HuffNode*)n->right->data,i);
-        }
-        else{
-            
-            printf("i: %i\n",i);
-            printf("character:%c\n",n->c);
-        }*/
+int asciiInt(char c){
+    int i = (int)c;
+    // 0-9
+    if( i >= 48 && i <=57){
+        return i-48;
+    }
+    // A-Z
+    else if(i >= 65 && i <= 90){
+        return i-55;
+    }
+    // a-z
+    else if(i >= 97 && i <=122){
+        return i-61;
+    }
+    else{
+        printf("Invalid character %c\n",c);
+        return -1;
     }
 }
-int HuffDepth(HuffNode* n){
+// will traverse inorder and assign 0 for going left and 1 for right to the character
+void inorder(HuffNode* n,int* i,int* A){
+    if(n!=NULL){
+        if(n->left != NULL){
+            (*i) *=2;
+            inorder((HuffNode*)n->left->data,i,A);
+        }
+        if(n->right != NULL){
+            (*i) = ((*i)*2) + 1;
+            inorder((HuffNode*)n->right->data,i,A);
+        }
+        if(n->left == NULL && n->right == NULL){
+            A[asciiInt(n->c)] = *i;
+            n->code = *i;
+            printf("c: %c i:%i\n",n->c,*i);
+        }
+        (*i) /=2; // traversing up the tree
+    }
+}
+void encode(char* str,int strLength,int* A,List codes){
+    for(int i =0;i<strLength;i++){
+        printf("%c\n",str[i]);
+        //append(codes,&A[asciiInt(str[i])]);
+    }
+}
+/*int HuffDepth(HuffNode* n){
     if(n == NULL){
         return 0;
     }
@@ -85,7 +102,7 @@ int HuffDepth(HuffNode* n){
                 return rDepth+1;
             }
      }
-}
+}*/
 int main()
 {
     List l = newList();
@@ -115,6 +132,7 @@ int main()
     }
 
     int n = strlen(C);
+    //for(int i =0;i<n;i++){printf("%c\n",C[i]);}
     int u = mapFreq(C,n,l);
     Heap h = newHeap(l);
     build_min_heap(h);
@@ -128,18 +146,20 @@ int main()
         z->right = Heap_Extract_Min(h);
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
     }
-/*    typedef struct codeNode{
-        char c;
-        int code;
-    }codeNode;
-    codeNode* cd = malloc(sizeof(codeNode)*u);*/
 
-    printf("huff tree height: %i\n",HuffDepth((HuffNode*)Heap_Minimum(h)->data));
+   // printf("huff tree height: %i\n",HuffDepth((HuffNode*)Heap_Minimum(h)->data));
     printf("%i\n",Heap_Minimum(h)->key);
     //printf("%c\n",((HuffNode*)((HuffNode*)Heap_Minimum(h)->data)->left->data)->c);
-    inorder((HuffNode*)Heap_Minimum(h)->data,0);
+    int* codes = malloc(sizeof(int)*62);
+    int binary = 0;
+    inorder((HuffNode*)Heap_Minimum(h)->data,&binary,codes);
+    //clear(l);
+    List list = newList();
+    encode(C,n,codes,list);
+    //printList(stdout,list,'i');
  //   printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
+    //freeList(&list);
     freeHeap(&h);
     return 0;
 }
