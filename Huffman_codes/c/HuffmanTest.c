@@ -43,7 +43,7 @@ int mapFreq(char* C,int strlen,List l){
 // will traverse inorder and assign 0 for going left and 1 for right to the character
 void inorder(HuffNode* n,int i){
     if(n!=NULL){
-        if(n->left != NULL){
+    /*    if(n->left != NULL){
             i *=2;
             inorder((HuffNode*)n->left->data,i);
         }
@@ -55,26 +55,43 @@ void inorder(HuffNode* n,int i){
             printf("c: %c i:%i\n",n->c,i);
         }
         i /=2; // traversing up the tree
-/*        if(n->left != NULL && n->right != NULL){
-        
-        i *= 2;
+*/       if(n->left != NULL && n->right != NULL){
+       printf("0\n"); 
         inorder((HuffNode*)n->left->data,i);
-        i = (i*2) + 1
+        printf("1\n");
         inorder((HuffNode*)n->right->data,i);
-        i = (i/4) - 1;    
         }
         else{
-            i/2;
+            
             printf("i: %i\n",i);
             printf("character:%c\n",n->c);
-        }*/
+        }
     }
+}
+int HuffDepth(HuffNode* n){
+    if(n == NULL){
+        return 0;
+    }
+    else{
+        if(n->left != NULL && n->right != NULL){
+            int lDepth = HuffDepth((HuffNode*)n->left->data);
+            int rDepth = HuffDepth(n->right->data);
+        }
+        else{return 0;}
+            if(lDepth < rDepth){
+                return lDepth+1;
+            }
+            else{
+                return rDepth+1;
+            }
+     }
 }
 int main()
 {
     List l = newList();
     //char* C = "One of the theories of mystery spot is said to be caused by natural hallucinations gas, Welcome to Santa Cruz!"; 
     //char* C="sepehr";
+    // test case from Introduction to Algorithms 3rd edition
     char* C = malloc(sizeof(100));
     for(int i = 0;i<100;i++){
         if(i <45){
@@ -117,7 +134,7 @@ int main()
     }codeNode;
     codeNode* cd = malloc(sizeof(codeNode)*u);*/
 
-    printf("max tree depth: %i\n",HeapDepth(h,1));
+    printf("huff tree height: %i\n",HuffDepth((HuffNode*)Heap_Minimum(h)->data));
     printf("%i\n",Heap_Minimum(h)->key);
     //printf("%c\n",((HuffNode*)((HuffNode*)Heap_Minimum(h)->data)->left->data)->c);
     inorder((HuffNode*)Heap_Minimum(h)->data,0);
