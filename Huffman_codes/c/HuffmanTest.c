@@ -43,7 +43,7 @@ int mapFreq(char* C,int strlen,List l){
 // will traverse inorder and assign 0 for going left and 1 for right to the character
 void inorder(HuffNode* n,int i){
     if(n!=NULL){
-    /*    if(n->left != NULL){
+        if(n->left != NULL){
             i *=2;
             inorder((HuffNode*)n->left->data,i);
         }
@@ -55,7 +55,7 @@ void inorder(HuffNode* n,int i){
             printf("c: %c i:%i\n",n->c,i);
         }
         i /=2; // traversing up the tree
-*/       if(n->left != NULL && n->right != NULL){
+/*       if(n->left != NULL && n->right != NULL){
        printf("0\n"); 
         inorder((HuffNode*)n->left->data,i);
         printf("1\n");
@@ -65,7 +65,7 @@ void inorder(HuffNode* n,int i){
             
             printf("i: %i\n",i);
             printf("character:%c\n",n->c);
-        }
+        }*/
     }
 }
 int HuffDepth(HuffNode* n){
