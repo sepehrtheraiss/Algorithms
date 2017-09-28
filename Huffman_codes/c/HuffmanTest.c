@@ -31,13 +31,14 @@ int freq(char c,char* str,int strlen){
             str[i] = '$';
         }
     }
-return n;
+    return n;
 }
 // maps each frequency of the character and returns the number of uniqe characters
 int mapFreq(char* C,int strlen,List l){
     char Ccopy[strlen];
+//    char* Ccopy = malloc(sizeof(strlen));
     strcpy(Ccopy,C);
-    printf("%s\n",Ccopy);
+   // printf("%s\n",Ccopy);
     int u = 0;
     for(int i=0;i<strlen;i++){
         if(Ccopy[i] != '$'){
@@ -144,12 +145,14 @@ int main()
     }
 
     int n = strlen(C);
+//    printf("%s\n",C);
     int u = mapFreq(C,n,l);
-    for(int i =0;i<n;i++){printf("%c ",C[i]);}
-    printf("\n");
+   // for(int i =0;i<n;i++){printf("%c ",C[i]);}
+    printf("%s\n",C);
+   // printf("\n");
     Heap h = newHeap(l);
     build_min_heap(h);
-    printf("size: %i length: %i \n", HeapSize(h),HeapLength(h));
+    printf("heap size: %i heap length: %i \n", HeapSize(h),HeapLength(h));
     printHeap(stdout,h,'c');
     printf("u:%i\n",u);
     for(int i =0;i<u-1;i++){
