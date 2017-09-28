@@ -9,6 +9,18 @@
         HeapNode* left;
         HeapNode* right;
     } HuffNode;
+/*int strLength(char* str){
+    int i = 0;
+    while(str[i] != '\0'){
+        i++;
+    }
+    return i;
+}
+void strCopy(char* str,char* c){
+    for(int i=0;i<strLength(str);i++){
+        c[i]=str[i];
+    }
+}*/
 // replaces the identical match of char with $ for efficiency
 // returns the frequency of a character in the given string
 int freq(char c,char* str,int strlen){
@@ -132,8 +144,9 @@ int main()
     }
 
     int n = strlen(C);
-    //for(int i =0;i<n;i++){printf("%c\n",C[i]);}
     int u = mapFreq(C,n,l);
+    for(int i =0;i<n;i++){printf("%c ",C[i]);}
+    printf("\n");
     Heap h = newHeap(l);
     build_min_heap(h);
     printf("size: %i length: %i \n", HeapSize(h),HeapLength(h));
@@ -155,7 +168,7 @@ int main()
     inorder((HuffNode*)Heap_Minimum(h)->data,&binary,codes);
     //clear(l);
     List list = newList();
-    encode(C,n,codes,list);
+    //encode(C,n,codes,list);
     //printList(stdout,list,'i');
  //   printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
