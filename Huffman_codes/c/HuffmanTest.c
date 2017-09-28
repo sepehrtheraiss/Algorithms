@@ -40,10 +40,12 @@ int mapFreq(char* C,int strlen,List l){
     strcpy(Ccopy,C);
    // printf("%s\n",Ccopy);
     int u = 0;
-
+    HeapNode* n = NULL;
     for(int i=0;i<strlen;i++){
         if(Ccopy[i] != '$'){
-            HeapNode* n = malloc(sizeof(HeapNode));
+            n = malloc(sizeof(HeapNode));
+            printf("&: %p ",&n);
+            printf("%p \n",n);
             n->data = malloc(sizeof(HuffNode));
             ((HuffNode *)n->data)->c     = Ccopy[i];
             ((HuffNode *)n->data)->left  = NULL;
@@ -121,9 +123,9 @@ int main()
 {
     List l = newList();
     //char* C = "One of the theories of mystery spot is said to be caused by natural hallucinations gas, Welcome to Santa Cruz!"; 
-    //char* C="sepehr";
+    //char* C="sepehr\0";
     // test case from Introduction to Algorithms 3rd edition
-    char* C = malloc(sizeof(100));
+    char* C = malloc(sizeof(101));
     for(int i = 0;i<100;i++){
         if(i <45){
             C[i] = 'a';
@@ -144,12 +146,13 @@ int main()
             C[i] = 'f';
         }
     }
+    C[100] = '\0';
 
     int n = strlen(C);
 //    printf("%s\n",C);
     int u = mapFreq(C,n,l);
    // for(int i =0;i<n;i++){printf("%c ",C[i]);}
- //   printf("%s\n",C);
+    printf("%s\n",C);
    // printf("\n");
     Heap h = newHeap(l);
     build_min_heap(h);
@@ -178,6 +181,7 @@ int main()
     freeList(&l);
     //freeList(&list);
     freeHeap(&h);
-//    printf("%s\n",C);
+    free(codes);
+    free(C);
     return 0;
 }

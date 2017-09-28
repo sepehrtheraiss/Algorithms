@@ -44,4 +44,4 @@ clean :
 	$(REMOVE)  HuffmanTest HeapTest ListTest *.o
 
 checkTest : HuffmanTest
-	$(MEMCHECK) ./HuffmanTest
+	$(MEMCHECK) HuffmanTest
