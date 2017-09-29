@@ -13,11 +13,8 @@ Heap newHeap(List list){
 	Heap h  = malloc(sizeof(HeapSortObj));
 	h->A = malloc( sizeof(HeapNode)* (length(list)+1) ) ; // A[0] will not be used
 	h->length = h->size = length(list);
-        h->A[0] = malloc(sizeof(HeapNode*));
-        h->A[0]->key = 0;
-        h->A[0]->data = "this is the zero index not used\n";
-
-        for(int i = 1; i <= h->length; i++){
+        h->A[0] = NULL;
+        for(int i = 1; i < h->length+1; i++){
             h->A[i] = (HeapNode *)pop(list);
         }
 	return h;
@@ -26,7 +23,7 @@ Heap newHeap(List list){
 // pre: *pH != NULL , pH != NULL
 void freeHeap(Heap* pH){
 	if(pH != NULL && *pH != NULL){
-                for(int i =0;i<(*pH)->length;i++){
+                for(int i =1;i<(*pH)->size+1;i++){
                     free((*pH)->A[i]->data);
                     free((*pH)->A[i]);
                     (*pH)->A[i]=NULL;
@@ -53,7 +50,7 @@ void swapHeap(Heap h,int i,int j){
 void printHeapMemAddress(Heap h){
     printf("A memory address: \n");
     for(int i = 1; i <= h->size; i++){
-        printf("%p \n",&h->A[i]);
+        printf("%p \n",h->A[i]);
     }
     //printf("\n");
 }
@@ -249,7 +246,17 @@ HeapNode* Heap_Extract_Min(Heap h){
         exit(EXIT_FAILURE);
     }
     HeapNode* min = h->A[1];
+    free(h->A[1]->data);
+    h->A[1]->data = NULL;
+    free(h->A[1]);
+    h->A[1] = NULL;
     h->A[1] = h->A[h->size];
+
+    free(h->A[h->size]->data);
+    h->A[h->size]->data = NULL;
+    free(h->A[h->size]);
+    h->A[h->size] = NULL;
+
     h->size--;
     min_heapify(h,1);
     return min;
@@ -269,6 +276,7 @@ void Heap_Decrease_Key(Heap h,int i,int key){
 
 void Min_Heap_Insert(Heap h,int key,void* data){
     h->size++;
+    printf("heap size: %i test: %p\n",h->size,h->A[h->size]);
     if(h !=NULL){
         if(h->A != NULL ){
             if(h->size > h->length){
