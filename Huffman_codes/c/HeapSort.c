@@ -16,6 +16,7 @@ Heap newHeap(List list){
         h->A[0] = NULL;
         for(int i = 1; i < h->length+1; i++){
             h->A[i] = (HeapNode *)pop(list);
+            printf("key: %i\n",h->A[i]->key);
         }
 	return h;
 }
@@ -23,7 +24,8 @@ Heap newHeap(List list){
 // pre: *pH != NULL , pH != NULL
 void freeHeap(Heap* pH){
 	if(pH != NULL && *pH != NULL){
-                for(int i =1;i<(*pH)->size+1;i++){
+                for(int i =1;i<(*pH)->length+1;i++){
+ //                   printf("free key:%i\n",(*pH)->A[i]->key);
                     free((*pH)->A[i]->data);
                     free((*pH)->A[i]);
                     (*pH)->A[i]=NULL;
@@ -50,7 +52,7 @@ void swapHeap(Heap h,int i,int j){
 void printHeapMemAddress(Heap h){
     printf("A memory address: \n");
     for(int i = 1; i <= h->size; i++){
-        printf("%p \n",h->A[i]);
+        printf("%p \n",&h->A[i]);
     }
     //printf("\n");
 }
@@ -246,17 +248,8 @@ HeapNode* Heap_Extract_Min(Heap h){
         exit(EXIT_FAILURE);
     }
     HeapNode* min = h->A[1];
-    free(h->A[1]->data);
-    h->A[1]->data = NULL;
-    free(h->A[1]);
-    h->A[1] = NULL;
     h->A[1] = h->A[h->size];
-
-    free(h->A[h->size]->data);
-    h->A[h->size]->data = NULL;
-    free(h->A[h->size]);
-    h->A[h->size] = NULL;
-
+    h->A[h->size] = min;
     h->size--;
     min_heapify(h,1);
     return min;
