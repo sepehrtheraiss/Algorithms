@@ -275,9 +275,9 @@ void Min_Heap_Insert(Heap h,int key,void* data){
             if(h->size > h->length){
                 h->length *= 2;
                 h->A = realloc(h->A,sizeof(HeapNode) * (h->length));
-                printf("length increased to: %i\n",h->length);   
+               // printf("length increased to: %i\n",h->length);   
+                h->A[h->size] = malloc(sizeof(HeapNode));
             }
-            h->A[h->size] = malloc(sizeof(HeapNode));
             h->A[h->size]->key = INT_MAX;
             h->A[h->size]->data = data;
             Heap_Decrease_Key(h,h->size,key);
