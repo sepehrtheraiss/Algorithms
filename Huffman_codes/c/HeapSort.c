@@ -3,6 +3,7 @@
 // strcuts ---------------------------------------------------------------------
 typedef struct HeapSortObj {
         HeapNode** A;
+        HeapNode** trash;
 	int size;
 	int length;
 } HeapSortObj;
@@ -12,11 +13,14 @@ typedef struct HeapSortObj {
 Heap newHeap(List list){
 	Heap h  = malloc(sizeof(HeapSortObj));
 	h->A = malloc( sizeof(HeapNode)* (length(list)+1) ) ; // A[0] will not be used
+	h->trash = malloc( sizeof(HeapNode)* (length(list)+1) ) ; // A[0] will not be used
 	h->length = h->size = length(list);
         h->A[0] = NULL;
+        h->trash[0] = NULL;
         for(int i = 1; i < h->length+1; i++){
             h->A[i] = (HeapNode *)pop(list);
-            printf("key: %i\n",h->A[i]->key);
+          //  printf("key: %i\n",h->A[i]->key);
+            h->trash[i] = NULL;
         }
 	return h;
 }
@@ -24,13 +28,18 @@ Heap newHeap(List list){
 // pre: *pH != NULL , pH != NULL
 void freeHeap(Heap* pH){
 	if(pH != NULL && *pH != NULL){
-                for(int i =1;i<(*pH)->length+1;i++){
- //                   printf("free key:%i\n",(*pH)->A[i]->key);
+                for(int i =1;i<(*pH)->size+1;i++){
                     free((*pH)->A[i]->data);
                     free((*pH)->A[i]);
                     (*pH)->A[i]=NULL;
+                    if((*pH)->trash[i] != NULL){
+                        free((*pH)->trash[i]->data);
+                        free((*pH)->trash[i]);
+                    }
+            
                 }
                 free((*pH)->A);
+                free((*pH)->trash);
 	        (*pH)->length = 0;
 	        (*pH)->size = 0;
 		free(*pH);
@@ -52,7 +61,7 @@ void swapHeap(Heap h,int i,int j){
 void printHeapMemAddress(Heap h){
     printf("A memory address: \n");
     for(int i = 1; i <= h->size; i++){
-        printf("%p \n",&h->A[i]);
+        printf("%p \n",h->A[i]);
     }
     //printf("\n");
 }
@@ -79,7 +88,7 @@ void printHeap(FILE* out,Heap h,char type){
                 fprintf(out,"key:%i data:%s\n",h->A[i]->key,(char *)h->A[i]->data);
                 break;
             case 'c':
-                fprintf(out,"key:%i data:%c\n",h->A[i]->key,*(char *)h->A[i]->data); // flaw *(*char)h->A[]->data gets the first struct var 
+                fprintf(out,"key:%i data:%c\n",h->A[i]->key,*(char *)h->A[i]->data); // flaw *(*char)h->A[]->data gets the first struct var if char
                 break;
             default:
                 fprintf(out,"key:%i data:%p\n",h->A[i]->key,h->A[i]->data);
@@ -249,8 +258,9 @@ HeapNode* Heap_Extract_Min(Heap h){
     }
     HeapNode* min = h->A[1];
     h->A[1] = h->A[h->size];
-    h->A[h->size] = min;
+    //h->A[h->size] = min;
     h->size--;
+    h->trash[h->length - h->size] = min;
     min_heapify(h,1);
     return min;
 }
@@ -275,9 +285,14 @@ void Min_Heap_Insert(Heap h,int key,void* data){
             if(h->size > h->length){
                 h->length *= 2;
                 h->A = realloc(h->A,sizeof(HeapNode) * (h->length));
+                h->trash = realloc(h->trash,sizeof(HeapNode) * (h->length));
+                for(int i = h->size; i < h->length;i++){
+                    h->A[i] = NULL;
+                    h->trash[i] = NULL;
+                }
                // printf("length increased to: %i\n",h->length);   
-                h->A[h->size] = malloc(sizeof(HeapNode));
             }
+            h->A[h->size] = malloc(sizeof(HeapNode));
             h->A[h->size]->key = INT_MAX;
             h->A[h->size]->data = data;
             Heap_Decrease_Key(h,h->size,key);

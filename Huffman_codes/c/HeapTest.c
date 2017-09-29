@@ -4,7 +4,7 @@ int main()
 {
     List l = newList();
     HeapNode* n = NULL;
-    printf("size of heap node: %i\n",sizeof(HeapNode));
+    printf("size of heap node: %lu\n",sizeof(HeapNode));
     for(int i =0;i<5;i++){
         n = malloc(sizeof(HeapNode));
         n->key = i+1;
@@ -22,9 +22,9 @@ int main()
     printHeapMemAddress(h);
     printf("size: %i\n",HeapSize(h));
     printHeap(stdout,h,'n');
-//    n = malloc(sizeof(HeapNode));
-  //  n->data = malloc(sizeof(HeapNode));
-  //  Min_Heap_Insert(h,1,n);
+/*    n = malloc(sizeof(HeapNode));
+    n->data = malloc(sizeof(HeapNode));
+    Min_Heap_Insert(h,1,n);*/
     printHeap(stdout,h,'n');
     printf("free Heap\n");
     freeHeap(&h);
