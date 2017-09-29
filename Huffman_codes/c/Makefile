@@ -12,7 +12,7 @@
 BASE_SOURCES   = HeapSort.c List.c
 BASE_OBJECTS   = HeapSort.o List.o
 HEADERS        = HeapSort.h List.h
-COMPILE        = gcc -c -std=c99 -Wall
+COMPILE        = gcc -c -g -std=c99 -Wall
 LINK           = gcc -o
 REMOVE         = rm -f
 MEMCHECK       = valgrind --leak-check=full
@@ -44,4 +44,4 @@ clean :
 	$(REMOVE)  HuffmanTest HeapTest ListTest *.o
 
 checkTest : HuffmanTest
-	$(MEMCHECK) HuffmanTest
+	$(MEMCHECK) ./HuffmanTest

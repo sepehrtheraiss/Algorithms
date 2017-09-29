@@ -26,6 +26,11 @@ Heap newHeap(List list){
 // pre: *pH != NULL , pH != NULL
 void freeHeap(Heap* pH){
 	if(pH != NULL && *pH != NULL){
+                for(int i =0;i<(*pH)->length;i++){
+                    free((*pH)->A[i]->data);
+                    free((*pH)->A[i]);
+                    (*pH)->A[i]=NULL;
+                }
                 free((*pH)->A);
 	        (*pH)->length = 0;
 	        (*pH)->size = 0;

@@ -97,8 +97,8 @@ void inorder(HuffNode* n,int* i,int* A){
 }
 void encode(char* str,int strLength,int* A,List codes){
     for(int i =0;i<strLength;i++){
-        printf("%c\n",str[i]);
-        //append(codes,&A[asciiInt(str[i])]);
+//        printf("%c\n",str[i]);
+        append(codes,&A[asciiInt(str[i])]);
     }
 }
 /*int HuffDepth(HuffNode* n){
@@ -119,13 +119,26 @@ void encode(char* str,int strLength,int* A,List codes){
             }
      }
 }*/
+void freeHuff(HuffNode* n){
+    if(n->left != NULL){
+        free(n->left->data);
+    }
+    if(n->right != NULL){
+        free(n->right->data);
+    }
+    if(n->right == NULL && n->left == NULL){
+        printf("freed: %i ",n->c);
+        free(n);
+        n = NULL;
+    }
+}
 int main()
 {
     List l = newList();
     //char* C = "One of the theories of mystery spot is said to be caused by natural hallucinations gas, Welcome to Santa Cruz!"; 
-    //char* C="sepehr\0";
+  //  char* C="sepehr\0";
     // test case from Introduction to Algorithms 3rd edition
-    char* C = malloc(sizeof(101));
+    char* C = malloc(101);
     for(int i = 0;i<100;i++){
         if(i <45){
             C[i] = 'a';
@@ -159,8 +172,9 @@ int main()
     printf("heap size: %i heap length: %i \n", HeapSize(h),HeapLength(h));
     printHeap(stdout,h,'c');
     printf("u:%i\n",u);
+    HuffNode* z = NULL;
     for(int i =0;i<u-1;i++){
-        HuffNode* z  = malloc(sizeof(HuffNode));       
+        z  = malloc(sizeof(HuffNode));       
         z->c = '$';
         z->left  = Heap_Extract_Min(h);
         z->right = Heap_Extract_Min(h);
@@ -180,8 +194,9 @@ int main()
  //   printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
     //freeList(&list);
+    //freeHuff(Heap_Minimum(h)->data);
     freeHeap(&h);
     free(codes);
-    free(C);
+//    free(C);
     return 0;
 }
