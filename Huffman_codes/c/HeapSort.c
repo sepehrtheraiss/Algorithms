@@ -17,6 +17,7 @@ Heap newHeap(List list){
 	h->length = h->size = length(list);
         h->A[0] = NULL;
         h->trash[0] = NULL;
+
         for(int i = 1; i < h->length+1; i++){
             h->A[i] = (HeapNode *)pop(list);
           //  printf("key: %i\n",h->A[i]->key);
@@ -258,7 +259,8 @@ HeapNode* Heap_Extract_Min(Heap h){
     }
     HeapNode* min = h->A[1];
     h->A[1] = h->A[h->size];
-    //h->A[h->size] = min;
+   // h->A[h->size] = NULL;
+   // h->A[h->size]->data = NULL;
     h->size--;
     h->trash[h->length - h->size] = min;
     min_heapify(h,1);
@@ -290,7 +292,7 @@ void Min_Heap_Insert(Heap h,int key,void* data){
                     h->A[i] = NULL;
                     h->trash[i] = NULL;
                 }
-               // printf("length increased to: %i\n",h->length);   
+                printf("length increased to: %i\n",h->length);   
             }
             h->A[h->size] = malloc(sizeof(HeapNode));
             h->A[h->size]->key = INT_MAX;

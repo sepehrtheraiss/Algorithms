@@ -22,9 +22,8 @@ int main()
     printHeapMemAddress(h);
     printf("size: %i\n",HeapSize(h));
     printHeap(stdout,h,'n');
-/*    n = malloc(sizeof(HeapNode));
-    n->data = malloc(sizeof(HeapNode));
-    Min_Heap_Insert(h,1,n);*/
+    n = malloc(sizeof(HeapNode));
+    Min_Heap_Insert(h,1,n);
     printHeap(stdout,h,'n');
     printf("free Heap\n");
     freeHeap(&h);
