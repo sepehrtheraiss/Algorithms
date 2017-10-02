@@ -3,10 +3,8 @@
 // strcuts ---------------------------------------------------------------------
 typedef struct HeapSortObj {
         HeapNode** A;
-        HeapNode** trash;
 	int size;
 	int length;
-        int trash_size;
 } HeapSortObj;
 // constructors-Destructors ----------------------------------------------------
 
@@ -14,16 +12,12 @@ typedef struct HeapSortObj {
 Heap newHeap(List list){
 	Heap h  = malloc(sizeof(HeapSortObj));
 	h->A = malloc( sizeof(HeapNode)* (length(list)+1) ) ; // A[0] will not be used
-	h->trash = malloc( sizeof(HeapNode)* (length(list)+1) ) ; // A[0] will not be used
 	h->length = h->size = length(list);
-        h->trash_size = 0;
         h->A[0] = NULL;
-        h->trash[0] = NULL;
 
         for(int i = 1; i < h->length+1; i++){
             h->A[i] = (HeapNode *)pop(list);
           //  printf("key: %i\n",h->A[i]->key);
-            h->trash[i] = NULL;
         }
 	return h;
 }
@@ -41,17 +35,9 @@ void freeHeap(Heap* pH){
                         free((*pH)->A[i]);
                         (*pH)->A[i] = NULL;
                     }
-                    if((*pH)->trash[i] != NULL){
-                        if((*pH)->trash[i]->data != NULL){
-                            free((*pH)->trash[i]->data);
-                            (*pH)->trash[i]->data = NULL;
-                        }
-                        free((*pH)->trash[i]); // ? invalid, but checked if it wasn't null
-                        (*pH)->trash[i] = NULL;
-                    }
+                    
                 }
                 free((*pH)->A);
-                free((*pH)->trash);
 	        (*pH)->length = 0;
 	        (*pH)->size = 0;
 		free(*pH);
@@ -272,8 +258,6 @@ HeapNode* Heap_Extract_Min(Heap h){
     h->A[1] = h->A[h->size];
     h->A[h->size] = NULL;
     h->size--;
-    h->trash_size++;
-    h->trash[h->length - h->size] = min;
     min_heapify(h,1);
     return min;
 }
@@ -297,10 +281,8 @@ void Min_Heap_Insert(Heap h,int key,void* data){
             if(h->size > h->length){
                 h->length *= 2;
                 h->A = realloc(h->A,sizeof(HeapNode) * (h->length));
-                h->trash = realloc(h->trash,sizeof(HeapNode) * (h->length));
                 for(int i = h->size; i < h->length + 1;i++){
                     h->A[i] = NULL;
-                    h->trash[i] = NULL;
                 }
                 printf("length increased to: %i\n",h->length);   
             }

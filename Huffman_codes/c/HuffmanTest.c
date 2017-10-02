@@ -9,18 +9,6 @@
         HeapNode* left;
         HeapNode* right;
     } HuffNode;
-/*int strLength(char* str){
-    int i = 0;
-    while(str[i] != '\0'){
-        i++;
-    }
-    return i;
-}
-void strCopy(char* str,char* c){
-    for(int i=0;i<strLength(str);i++){
-        c[i]=str[i];
-    }
-}*/
 // replaces the identical match of char with $ for efficiency
 // returns the frequency of a character in the given string
 int freq(char c,char* str,int strlen){
@@ -120,24 +108,25 @@ void encode(char* str,int strLength,int* A,List codes){
      }
 }*/
 void freeHuff(HuffNode* n){
-    if(n->left != NULL){
-        freeHuff(n->left->data);
-        n->left->data = NULL;
-        free(n->left);
-        n->left = NULL;
-    }
-    if(n->right != NULL){
-        freeHuff(n->right->data);
-        n->right->data = NULL;
-        free(n->right);
-        n->right = NULL;
-
-    }
-    if(n->right == NULL && n->left == NULL){
-        printf("freeing :%c\n",n->c);
-        free(n);
-        n = NULL;
-    }
+    if(n != NULL){
+        if(n->left != NULL){
+            freeHuff(n->left->data);
+            n->left->data = NULL;
+            free(n->left);
+            n->left = NULL;
+        }
+        if(n->right != NULL){
+            freeHuff(n->right->data);
+            n->right->data = NULL;
+            free(n->right);
+            n->right = NULL;
+        }
+        if(n->right == NULL && n->left == NULL){
+            printf("freeing :%p %c\n",n,n->c);
+            free(n);
+            n = NULL;
+        }
+    }// end if
 }
 int main()
 {
@@ -188,22 +177,22 @@ int main()
         Min_Heap_Insert(h,z->left->key+z->right->key,z);
     }
     printf("heap size: %i heap length: %i \n", HeapSize(h),HeapLength(h));
-   // printf("huff tree height: %i\n",HuffDepth((HuffNode*)Heap_Minimum(h)->data));
-    //printf("%c\n",((HuffNode*)((HuffNode*)Heap_Minimum(h)->data)->left->data)->c);
-/*    int* codes = malloc(sizeof(int)*62);
+    int* codes = malloc(sizeof(int)*62);
     int binary = 0;
-    inorder((HuffNode*)Heap_Minimum(h)->data,&binary,codes);*/
-    //clear(l);
+    inorder((HuffNode*)Heap_Minimum(h)->data,&binary,codes);
+    clear(l);
    // List list = newList();
-    //encode(C,n,codes,list);
+    encode(C,n,codes,l);
     //printList(stdout,list,'i');
  //   printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
 //freeList(&list);
 //    printf("%c\n",((HuffNode*)Heap_Extract_Min(h)->data)->c);
-    freeHuff((HuffNode*)Heap_Extract_Min(h)->data);
+    freeHuff(Heap_Minimum(h)->data);
+    //freeHuff((HuffNode*)Heap_Extract_Min(h)->data);
+    free(Heap_Extract_Min(h));
     freeHeap(&h);
-    //free(codes);
+    free(codes);
     free(C);
     return 0;
 }
