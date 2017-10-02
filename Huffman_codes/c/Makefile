@@ -15,7 +15,7 @@ HEADERS        = HeapSort.h List.h
 COMPILE        = gcc -c -g -std=c99 -Wall
 LINK           = gcc -o
 REMOVE         = rm -f
-MEMCHECK       = valgrind --leak-check=full --track-origins=yes
+MEMCHECK       = valgrind --leak-check=full --track-origins=yes 
 
 
 ListTest : ListTest.o List.o

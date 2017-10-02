@@ -6,6 +6,7 @@ typedef struct HeapSortObj {
         HeapNode** trash;
 	int size;
 	int length;
+        int trash_size;
 } HeapSortObj;
 // constructors-Destructors ----------------------------------------------------
 
@@ -15,6 +16,7 @@ Heap newHeap(List list){
 	h->A = malloc( sizeof(HeapNode)* (length(list)+1) ) ; // A[0] will not be used
 	h->trash = malloc( sizeof(HeapNode)* (length(list)+1) ) ; // A[0] will not be used
 	h->length = h->size = length(list);
+        h->trash_size = 0;
         h->A[0] = NULL;
         h->trash[0] = NULL;
 
@@ -29,13 +31,21 @@ Heap newHeap(List list){
 // pre: *pH != NULL , pH != NULL
 void freeHeap(Heap* pH){
 	if(pH != NULL && *pH != NULL){
-                for(int i =1;i<(*pH)->size+1;i++){
-                    free((*pH)->A[i]->data);
-                    free((*pH)->A[i]);
-                    (*pH)->A[i]=NULL;
+            
+                for(int i =1;i<(*pH)->length+1;i++){
+                    if((*pH)->A[i] != NULL){
+                        printf("free A: %i\n",(*pH)->A[i]->key);
+                        free((*pH)->A[i]->data);
+                        (*pH)->A[i]->data = NULL;
+                        free((*pH)->A[i]);
+                        (*pH)->A[i] = NULL;
+                    }
                     if((*pH)->trash[i] != NULL){
+                        printf("free: %i\n",(*pH)->trash[i]->key);
                         free((*pH)->trash[i]->data);
+                        (*pH)->trash[i]->data = NULL;
                         free((*pH)->trash[i]);
+                        (*pH)->trash[i] = NULL;
                     }
             
                 }
@@ -259,9 +269,9 @@ HeapNode* Heap_Extract_Min(Heap h){
     }
     HeapNode* min = h->A[1];
     h->A[1] = h->A[h->size];
-   // h->A[h->size] = NULL;
-   // h->A[h->size]->data = NULL;
+    h->A[h->size] = NULL;
     h->size--;
+    h->trash_size++;
     h->trash[h->length - h->size] = min;
     min_heapify(h,1);
     return min;
@@ -281,14 +291,13 @@ void Heap_Decrease_Key(Heap h,int i,int key){
 
 void Min_Heap_Insert(Heap h,int key,void* data){
     h->size++;
-    printf("heap size: %i test: %p\n",h->size,h->A[h->size]);
     if(h !=NULL){
         if(h->A != NULL ){
             if(h->size > h->length){
                 h->length *= 2;
                 h->A = realloc(h->A,sizeof(HeapNode) * (h->length));
                 h->trash = realloc(h->trash,sizeof(HeapNode) * (h->length));
-                for(int i = h->size; i < h->length;i++){
+                for(int i = h->size; i < h->length + 1;i++){
                     h->A[i] = NULL;
                     h->trash[i] = NULL;
                 }
