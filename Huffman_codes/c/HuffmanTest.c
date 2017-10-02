@@ -120,18 +120,21 @@ void encode(char* str,int strLength,int* A,List codes){
      }
 }*/
 void freeHuff(HuffNode* n){
-    printf("here1\n");
     if(n->left != NULL){
-        free(n->left->data);
-    printf("here left\n");
+        freeHuff(n->left->data);
+        n->left->data = NULL;
+        free(n->left);
+        n->left = NULL;
     }
     if(n->right != NULL){
-    printf("here right\n");
-        free(n->right->data);
+        freeHuff(n->right->data);
+        n->right->data = NULL;
+        free(n->right);
+        n->right = NULL;
+
     }
     if(n->right == NULL && n->left == NULL){
-    printf("here!!!!!\n");
-        printf("freed: %c\n ",n->c);
+        printf("freeing :%c\n",n->c);
         free(n);
         n = NULL;
     }
@@ -199,7 +202,7 @@ int main()
 //freeList(&list);
 //    printf("%c\n",((HuffNode*)Heap_Extract_Min(h)->data)->c);
     freeHuff((HuffNode*)Heap_Extract_Min(h)->data);
-//    freeHeap(&h);
+    freeHeap(&h);
     //free(codes);
     free(C);
     return 0;

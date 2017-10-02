@@ -34,20 +34,21 @@ void freeHeap(Heap* pH){
             
                 for(int i =1;i<(*pH)->length+1;i++){
                     if((*pH)->A[i] != NULL){
-                        printf("free A: %i\n",(*pH)->A[i]->key);
-                        free((*pH)->A[i]->data);
-                        (*pH)->A[i]->data = NULL;
+                        if((*pH)->A[i]->data != NULL){
+                            free((*pH)->A[i]->data);
+                            (*pH)->A[i]->data = NULL;
+                        }
                         free((*pH)->A[i]);
                         (*pH)->A[i] = NULL;
                     }
                     if((*pH)->trash[i] != NULL){
-                        printf("free: %i\n",(*pH)->trash[i]->key);
-                        free((*pH)->trash[i]->data);
-                        (*pH)->trash[i]->data = NULL;
-                        free((*pH)->trash[i]);
+                        if((*pH)->trash[i]->data != NULL){
+                            free((*pH)->trash[i]->data);
+                            (*pH)->trash[i]->data = NULL;
+                        }
+                        free((*pH)->trash[i]); // ? invalid, but checked if it wasn't null
                         (*pH)->trash[i] = NULL;
                     }
-            
                 }
                 free((*pH)->A);
                 free((*pH)->trash);
