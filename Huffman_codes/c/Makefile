@@ -5,8 +5,8 @@
 #  make HeapTest            makes HeapTest
 #  make HuffmanTest         makes HuffmanTest
 #  make clean               removes binaries
-#  make checkFind           tests heap for memory leaks 
-#  make checkTest           tests HeapTest for memory leaks
+#  make checkHeapTest       tests heap for memory leaks 
+#  make checkHufftest           tests Huffman for memory leaks
 #------------------------------------------------------------------------------
 
 BASE_SOURCES   = HeapSort.c List.c
@@ -14,7 +14,7 @@ BASE_OBJECTS   = HeapSort.o List.o
 HEADERS        = HeapSort.h List.h
 COMPILE        = gcc -c -g -std=c99 -Wall
 LINK           = gcc -o
-REMOVE         = rm -f
+REMOVE         = rm -f1
 MEMCHECK       = valgrind --leak-check=full --track-origins=yes 
 
 
