@@ -83,11 +83,34 @@ void inorder(HuffNode* n,int* i,int* A){
         (*i) /=2; // traversing up the tree
     }
 }
-void encode(char* str,int strLength,int* A,List codes){
+void encode(char* str,int strLength,int* A,List l){
     for(int i =0;i<strLength;i++){
-//        printf("%c\n",str[i]);
-        append(codes,&A[asciiInt(str[i])]);
+        append(l,&A[asciiInt(str[i])]);
     }
+}
+void printHuff(HuffNode** n,int binary){
+    if(binary != 0){
+        int bit = binary % 2;
+        printHuff(n,bit/2);
+        if(bit == 0){
+            (*n) =  (*n)->left->data;
+        }
+        else if(bit == 1){
+           (*n) = (*n)->right->data;
+        }
+    }
+    if((*n)->left == NULL && (*n)->right == NULL){
+        printf("%c ",(*n)->c);
+    }
+}
+void decode(List l,HuffNode* root){
+
+    moveFront(l);
+    while(index(l) != -1){
+        printHuff(&root,*(int *)get(l));
+        moveNext(l);
+    }
+    printf("\n");
 }
 /*int HuffDepth(HuffNode* n){
     if(n == NULL){
@@ -122,7 +145,6 @@ void freeHuff(HuffNode* n){
             n->right = NULL;
         }
         if(n->right == NULL && n->left == NULL){
-            printf("freeing :%p %c\n",n,n->c);
             free(n);
             n = NULL;
         }
@@ -183,6 +205,8 @@ int main()
     clear(l);
    // List list = newList();
     encode(C,n,codes,l);
+    printList(stdout,l,'i');
+    decode(l,(HuffNode*)Heap_Minimum(h)->data);
     //printList(stdout,list,'i');
  //   printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
