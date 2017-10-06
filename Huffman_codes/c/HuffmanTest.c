@@ -88,26 +88,35 @@ void encode(char* str,int strLength,int* A,List l){
         append(l,&A[asciiInt(str[i])]);
     }
 }
-void printHuff(HuffNode** n,int binary){
-    if(binary != 0){
-        int bit = binary % 2;
-        printHuff(n,bit/2);
-        if(bit == 0){
-            (*n) =  (*n)->left->data;
-        }
-        else if(bit == 1){
-           (*n) = (*n)->right->data;
-        }
+
+int intToBinary(int integer){
+    int binary = integer;
+    int bit = 0;
+    int mult = 1;
+    while(integer != 0){
+        bit = integer % 2;
+        binary += mult * bit;
+        mult *= 10;
+        integer /= 2;
     }
-    if((*n)->left == NULL && (*n)->right == NULL){
-        printf("%c ",(*n)->c);
+    return binary;
+}
+void printHuff(int intCode){
+    int binary = intToBinary(intCode);
+    int bit = 0;
+    while(binary != 0){
+        bit = binary 
+    }
+
+    else{
+        fprintf(stderr,"incorect bit code\n");
+        exit(EXIT_FAILURE);
     }
 }
-void decode(List l,HuffNode* root){
-
+void decode(List l){
     moveFront(l);
     while(index(l) != -1){
-        printHuff(&root,*(int *)get(l));
+        printHuff(*(int *)get(l));
         moveNext(l);
     }
     printf("\n");
