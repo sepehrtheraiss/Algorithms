@@ -90,28 +90,27 @@ void encode(char* str,int strLength,int* A,List l){
 }
 
 int intToBinary(int integer){
-    int binary = integer;
-    int bit = 0;
-    int mult = 1;
-    while(integer != 0){
-        bit = integer % 2;
-        binary += mult * bit;
-        mult *= 10;
-        integer /= 2;
-    }
-    return binary;
+       if(integer == 0 || integer == 1){
+            return integer;
+       }
+       else{
+         int bit = 0;
+         int binary = 0;
+         int mult = 1;
+         while(integer != 0){
+            bit = integer % 2;
+            integer /= 2;
+            bit *= mult;
+            mult *= 10;
+            binary += bit;
+         }
+       return binary;
+       }
 }
 void printHuff(int intCode){
     int binary = intToBinary(intCode);
-    int bit = 0;
-    while(binary != 0){
-        bit = binary 
-    }
+    printf("%i ",binary);
 
-    else{
-        fprintf(stderr,"incorect bit code\n");
-        exit(EXIT_FAILURE);
-    }
 }
 void decode(List l){
     moveFront(l);
@@ -215,7 +214,7 @@ int main()
    // List list = newList();
     encode(C,n,codes,l);
     printList(stdout,l,'i');
-    decode(l,(HuffNode*)Heap_Minimum(h)->data);
+    decode(l);//,(HuffNode*)Heap_Minimum(h)->data);
     //printList(stdout,list,'i');
  //   printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
