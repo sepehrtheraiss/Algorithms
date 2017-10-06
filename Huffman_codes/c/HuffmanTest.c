@@ -108,9 +108,21 @@ int intToBinary(int integer){
        }
 }
 void printHuff(int intCode){
-    int binary = intToBinary(intCode);
-    printf("%i ",binary);
-
+    int length = 1;
+    int div = intCode;
+    while(div != 0 && div != 1){
+        div /= 2;
+        length++;
+    }
+    int shift = 1;
+    int mask = 0;
+    while(length != 0){
+        mask = shift & intCode;
+        printf("%i",mask);
+        shift = shift << 1;
+        length--;
+    }
+    printf(" ");
 }
 void decode(List l){
     moveFront(l);
