@@ -107,27 +107,34 @@ int intToBinary(int integer){
        return binary;
        }
 }
-void printHuff(int intCode){
-    int length = 1;
+void printHuff(HuffNode** n,int intCode){
+    int shift = 0;
     int div = intCode;
     while(div != 0 && div != 1){
         div /= 2;
-        length++;
+        shift++;
     }
-    int shift = 1;
-    int mask = 0;
-    while(length != 0){
-        mask = shift & intCode;
-        printf("%i",mask);
-        shift = shift << 1;
-        length--;
+    int mask = 1 << shift;
+    int bit = 0;
+    while(shift >= 0){
+        bit = mask & intCode;
+        if(bit == 0){
+            //printf("0");
+            n = (*n)->left->data;
+        }
+        else{
+            //printf("1");
+            n = (*n)->right->data;
+        }
+        mask = mask >> 1;
+        shift--;
     }
-    printf(" ");
+    printf("%c",(*n)->c);
 }
-void decode(List l){
+void decode(List l,HuffNode** n){
     moveFront(l);
     while(index(l) != -1){
-        printHuff(*(int *)get(l));
+        printHuff(n,*(int *)get(l));
         moveNext(l);
     }
     printf("\n");
@@ -226,7 +233,8 @@ int main()
    // List list = newList();
     encode(C,n,codes,l);
     printList(stdout,l,'i');
-    decode(l);//,(HuffNode*)Heap_Minimum(h)->data);
+    HuffNode* root = Heap_Minimum(h)->data;
+    decode(l,&root);
     //printList(stdout,list,'i');
  //   printf("%i\n",Heap_Minimum(h)->key);
     freeList(&l);
